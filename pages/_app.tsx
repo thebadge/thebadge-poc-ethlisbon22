@@ -1,5 +1,3 @@
-import '../styles/globals.css'
-
 import type { NextPage } from 'next'
 import type { AppContext, AppProps } from 'next/app'
 import NextApp from 'next/app'
@@ -8,13 +6,20 @@ import { ReactElement, ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { AbstractIntlMessages, NextIntlProvider } from 'next-intl'
+import { GoogleAnalytics } from 'nextjs-google-analytics'
 import { SWRConfig } from 'swr'
 
 import { InnerContainer } from '@/src/components/helpers/InnerContainer'
+import SafeSuspense from '@/src/components/helpers/SafeSuspense'
 import { Main } from '@/src/components/layout/Main'
 import { Head } from '@/src/page_partials/index/Head'
 import ThemeProvider from '@/src/providers/themeProvider'
 import { intlErrorHandler } from '@/src/utils/intlErrorHandler'
+
+// TheBadge UI Library
+import 'node_modules/thebadge-ui-library/dist/index.css'
+
+import 'sanitize.css'
 
 const Container = styled(InnerContainer)`
   flex-grow: 1;
@@ -39,6 +44,7 @@ export default function App({ Component, messages, pageProps }: AppPropsWithLayo
   const getLayout = Component.getLayout ?? ((page) => <Main>{page}</Main>)
   return (
     <>
+      <GoogleAnalytics />
       <NextIntlProvider messages={messages} onError={intlErrorHandler}>
         <Head />
         <SWRConfig
@@ -49,13 +55,15 @@ export default function App({ Component, messages, pageProps }: AppPropsWithLayo
         >
           <Web3ConnectionProvider>
             <ThemeProvider>
-              {/*      <TransactionNotificationProvider>*/}
-              {/*        <CookiesWarningProvider>*/}
-              {/*          <Header />*/}
-              <Container>{getLayout(<Component {...pageProps} />)}</Container>
-              {/* <Footer /> */}
-              {/*    </CookiesWarningProvider>*/}
-              {/*  </TransactionNotificationProvider>*/}
+              <SafeSuspense>
+                {/*      <TransactionNotificationProvider>*/}
+                {/*        <CookiesWarningProvider>*/}
+                {/*          <Header />*/}
+                <Container>{getLayout(<Component {...pageProps} />)}</Container>
+                {/* <Footer /> */}
+                {/*    </CookiesWarningProvider>*/}
+                {/*  </TransactionNotificationProvider>*/}
+              </SafeSuspense>
               {/*    <Toast />*/}
             </ThemeProvider>
           </Web3ConnectionProvider>

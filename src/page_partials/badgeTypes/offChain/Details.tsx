@@ -41,13 +41,11 @@ function OffChainDetails({ badgeType, summary, ...rest }: Props) {
       image: string
     }) || {}
 
-  // TODO get kleros metadata
   const klerosMetadata =
     (useMetadata(badgeType.klerosMetadataURL) as unknown as {
       fileURI: string
     }) || {}
 
-  // TODO: get kleros metadata
   return (
     <Box {...rest}>
       <span>
