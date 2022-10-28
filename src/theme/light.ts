@@ -1,35 +1,29 @@
 /* Light Theme           */
 
-const lightGreen = '#14C267'
-const lighterGreen = '#00FF7A'
-const darkGreen = '#09271F'
-const darkerGreen = '#011B14'
-const darkererGreen = '#00140E'
-const darkerGreenHover = '#011f17'
-const darkestGreen = '#001F17'
+const lightGreen = '#62CBA5'
 const grayishGreen = '#BBCEC4'
-const gray = '#707070'
+const gray = '#b2b2b2'
 const error = '#D03333'
 const success = lightGreen
-const primary = '#FFE2AE'
-const primaryDark = '#A29237'
-const primaryDarker = '#A09246'
-const secondary = '#E56399'
+const primary = '#2D64F1'
+const primaryLight = '#7491FF'
+const primaryDark = '#003BBD'
+const secondary = '#252C3C'
 const tertiary = '#A6CFD5'
-const textColor = primary
-const textColorLight = '#9D9460'
+const textColor = '#FFFFFF'
+const textColorLight = '#000000'
 const textColorDark = primaryDark
 const borderColor = 'rgba(250,250,250,0.2)'
 const darkGray = 'rgb(10, 25, 50)'
 const darkBlue = 'rgb(6, 75, 141)'
-const componentBackgroundColor = 'rgba(13, 2, 2, 0.85)'
+const componentBackgroundColor = 'rgba(12, 12, 12, 0.85)'
 
 export const lightTheme = {
   body: {
     backgroundImage: 'none',
   },
   card: {
-    borderColor: 'transparent',
+    backgroundColor: gray,
   },
   colors: {
     borderColor: borderColor,
@@ -37,25 +31,28 @@ export const lightTheme = {
     danger: error,
     darkBlue: darkBlue,
     darkGray: darkGray,
-    darkGreen: darkGreen,
-    darkerGreen: darkerGreen,
-    darkerGreenHover: darkerGreenHover,
-    darkererGreen: darkererGreen,
-    darkestGreen: darkestGreen,
     error: error,
     gray: gray,
     grayishGreen: grayishGreen,
     lightGreen: lightGreen,
-    lighterGreen: lighterGreen,
     ok: lightGreen,
     primary: primary,
     primaryDark: primaryDark,
-    primaryDarker: primaryDarker,
+    primaryLight: primaryLight,
     secondary: secondary,
     success: success,
     tertiary: tertiary,
     textColor: textColor,
     textColorDark: textColorDark,
     textColorLight: textColorLight,
+  },
+  onBoard: {
+    backgroundColor: primary,
+    color: tertiary,
+    borderRadius: '5px',
+    borderColor: primaryDark,
+    sidebarBackgroundColor: 'rgb(255, 255, 255, 0.08)',
+    buttonBackgroundColor: primaryLight,
+    buttonBackgroundColorHover: 'rgb(32, 64, 194, 0.12)',
   },
 }

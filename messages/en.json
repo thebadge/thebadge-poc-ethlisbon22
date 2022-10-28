@@ -1,6 +1,22 @@
 {
+  "meta": {
+    "title": "The Badge",
+    "description": "Information certification"
+  },
   "home": {
     "title": "The Badge",
-    "badgeTypes": "Badge types"
+    "badgeTypes": "Badge types",
+    "noBadgeTypes": "There are not badge types created  yet"
+  },
+  "pagePartials": {
+    "badgeType": {
+      "offChainDetails": {
+        "criteria": "Criteria",
+        "mintCost": "Mint cost",
+        "mintFee": "Mint fee",
+        "deposit": "Deposit",
+        "getBadge": "Get Badge"
+      }
+    }
   }
 }
