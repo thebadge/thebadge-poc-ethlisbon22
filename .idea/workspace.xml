@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62628a88-8e8a-48f4-b039-ad610e70a5f1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/generated/subgraph.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/typechain/Sample.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/typechain/common.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/typechain/factories/Sample__factory.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/typechain/factories/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/typechain/index.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

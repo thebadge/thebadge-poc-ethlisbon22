@@ -21,6 +21,8 @@ junit.xml
 # misc
 .DS_Store
 *.pem
+tsconfig.tsbuildinfo
+.eslintcache
 
 # debug
 /logs
@@ -62,3 +64,13 @@ next-env.d.ts
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+#types
+/types/typechain
+/types/generated
