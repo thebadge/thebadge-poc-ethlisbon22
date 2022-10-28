@@ -30,7 +30,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link href="/favicon.ico" rel="icon" />
+          <link href="/favicon.ico?v=1.0" rel="icon" />
           <meta content="#333" name="msapplication-TileColor" />
           <meta content="#333" name="theme-color"></meta>
           <link href="https://fonts.googleapis.com" rel="preconnect" />
