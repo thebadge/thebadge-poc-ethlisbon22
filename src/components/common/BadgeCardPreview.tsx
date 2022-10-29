@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { BadgePreview } from 'thebadge-ui-library'
 
+import { LogoWithText } from '@/src/components/assets/LogoWithText'
 import { BadgeMetadata, BadgeType, BadgeTypeMetadata } from '@/src/constants/types'
 import useMetadata from '@/src/hooks/useMetadata'
 
@@ -13,6 +14,19 @@ const BadgeContainer = styled.div`
   height: 450px;
   margin-left: 3rem;
   margin-top: 3rem;
+  justify-content: center;
+  align-items: center;
+`
+
+const BadgeContainerError = styled(BadgeContainer)`
+  border: 2px solid ${({ theme: { colors } }) => colors.darkGreen};
+  border-radius: 8px;
+  padding: 16px;
+`
+const BadgeMetadataErrorMessage = styled.div`
+  padding: 8px;
+  font-size: 16px;
+  text-align: center;
 `
 
 type BadgeCardPreviewProps = {
@@ -29,9 +43,13 @@ export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
 
   if (!badgeMetadata || !badgeMetadata || !badgeTypeMetadata) {
     return (
-      <BadgeContainer>
-        The metadata of the badge could not get recovered, please try again...
-      </BadgeContainer>
+      <BadgeContainerError>
+        <LogoWithText></LogoWithText>
+        <BadgeMetadataErrorMessage>
+          <div>The metadata of the badge could not get recovered.</div>
+          <div>Please try again.</div>
+        </BadgeMetadataErrorMessage>
+      </BadgeContainerError>
     )
   }
 

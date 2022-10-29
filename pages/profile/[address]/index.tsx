@@ -30,105 +30,6 @@ const SubTitle = styled(BaseTitle)`
   margin-bottom: 16px;
 `
 
-const test = [
-  {
-    id: '1-0x6230a918266d27ce0abd576b32b6a0516dba39d3',
-    status: 'InReview',
-    badgeType: {
-      metadataURL:
-        'ipfs://bafyreihv7k4vupbhwjlvyjlkdwsi7j2ttwkt3lbqkuctas43f2ausuq4ga/metadata.json',
-      klerosMetadataURL: '/ipfs/bafkreih2ngblf5wdpnxdbkans76nyjge24zlpduujt2ea3lxwpjl6lrpiq',
-    },
-    user: {
-      mintedBadges: 10,
-    },
-  },
-  {
-    id: '2-0x6230a918266d27ce0abd576b32b6a0516dba39d3',
-    status: 'InReview',
-    badgeType: {
-      metadataURL:
-        'ipfs://bafyreihv7k4vupbhwjlvyjlkdwsi7j2ttwkt3lbqkuctas43f2ausuq4ga/metadata.json',
-      klerosMetadataURL: '/ipfs/bafkreih2ngblf5wdpnxdbkans76nyjge24zlpduujt2ea3lxwpjl6lrpiq',
-    },
-    user: {
-      mintedBadges: 10,
-    },
-  },
-  {
-    id: '3-0x6230a918266d27ce0abd576b32b6a0516dba39d3',
-    status: 'InReview',
-    badgeType: {
-      metadataURL:
-        'ipfs://bafyreihv7k4vupbhwjlvyjlkdwsi7j2ttwkt3lbqkuctas43f2ausuq4ga/metadata.json',
-      klerosMetadataURL: '/ipfs/bafkreih2ngblf5wdpnxdbkans76nyjge24zlpduujt2ea3lxwpjl6lrpiq',
-    },
-    user: {
-      mintedBadges: 10,
-    },
-  },
-  {
-    id: '4-0x6230a918266d27ce0abd576b32b6a0516dba39d3',
-    status: 'InReview',
-    badgeType: {
-      metadataURL:
-        'ipfs://bafyreihv7k4vupbhwjlvyjlkdwsi7j2ttwkt3lbqkuctas43f2ausuq4ga/metadata.json',
-      klerosMetadataURL: '/ipfs/bafkreih2ngblf5wdpnxdbkans76nyjge24zlpduujt2ea3lxwpjl6lrpiq',
-    },
-    user: {
-      mintedBadges: 10,
-    },
-  },
-  {
-    id: '5-0x6230a918266d27ce0abd576b32b6a0516dba39d3',
-    status: 'InReview',
-    badgeType: {
-      metadataURL:
-        'ipfs://bafyreihv7k4vupbhwjlvyjlkdwsi7j2ttwkt3lbqkuctas43f2ausuq4ga/metadata.json',
-      klerosMetadataURL: '/ipfs/bafkreih2ngblf5wdpnxdbkans76nyjge24zlpduujt2ea3lxwpjl6lrpiq',
-    },
-    user: {
-      mintedBadges: 10,
-    },
-  },
-  {
-    id: '6-0x6230a918266d27ce0abd576b32b6a0516dba39d3',
-    status: 'InReview',
-    badgeType: {
-      metadataURL:
-        'ipfs://bafyreihv7k4vupbhwjlvyjlkdwsi7j2ttwkt3lbqkuctas43f2ausuq4ga/metadata.json',
-      klerosMetadataURL: '/ipfs/bafkreih2ngblf5wdpnxdbkans76nyjge24zlpduujt2ea3lxwpjl6lrpiq',
-    },
-    user: {
-      mintedBadges: 10,
-    },
-  },
-  {
-    id: '7-0x6230a918266d27ce0abd576b32b6a0516dba39d3',
-    status: 'InReview',
-    badgeType: {
-      metadataURL:
-        'ipfs://bafyreihv7k4vupbhwjlvyjlkdwsi7j2ttwkt3lbqkuctas43f2ausuq4ga/metadata.json',
-      klerosMetadataURL: '/ipfs/bafkreih2ngblf5wdpnxdbkans76nyjge24zlpduujt2ea3lxwpjl6lrpiq',
-    },
-    user: {
-      mintedBadges: 10,
-    },
-  },
-  {
-    id: '8-0x6230a918266d27ce0abd576b32b6a0516dba39d3',
-    status: 'InReview',
-    badgeType: {
-      metadataURL:
-        'ipfs://bafyreihv7k4vupbhwjlvyjlkdwsi7j2ttwkt3lbqkuctas43f2ausuq4ga/metadata.json',
-      klerosMetadataURL: '/ipfs/bafkreih2ngblf5wdpnxdbkans76nyjge24zlpduujt2ea3lxwpjl6lrpiq',
-    },
-    user: {
-      mintedBadges: 10,
-    },
-  },
-]
-
 const Profile: NextPage = () => {
   const router = useRouter()
   const t = useTranslations('profile')
@@ -139,7 +40,7 @@ const Profile: NextPage = () => {
   const userBadges = gql.useUserBadges({ id: userAddress as string })
 
   // appending with real badges with test data
-  const badges = userBadges.data?.badges ? [...userBadges.data.badges, ...test] : test
+  const badges = userBadges.data?.badges || []
 
   return (
     <>
