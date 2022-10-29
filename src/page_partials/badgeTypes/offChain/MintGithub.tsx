@@ -1,9 +1,11 @@
 import { FC, useState } from 'react'
 import styled from 'styled-components'
 
+import axios from 'axios'
 import { useTranslations } from 'next-intl'
 import { Button } from 'thebadge-ui-library'
 
+import { GetCommitInformationResponse } from '@/pages/api/getCommitInformation'
 import { CopyButton } from '@/src/components/buttons/CopyButton'
 import { BaseCard } from '@/src/components/common/BaseCard'
 import { Textfield } from '@/src/components/form/Textfield'
@@ -100,7 +102,34 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
   const evidenceText = getGithubEvidence(address!)
 
   const onSubmit = async () => {
-    // @todo (agustin) logic
+    try {
+      const { commitHash } = formData
+      const result = await axios.post<GetCommitInformationResponse>('/api/getCommitInformation', {
+        commitHash,
+        userAddress: address,
+      })
+      const githubOwner = result.data.githubOwner as string
+      console.log('owner', githubOwner)
+      // @todo (agustin) add preview page
+    } catch (error: any) {
+      console.log('Error fetching commit information:', error.response.data)
+      const { errorMessage } = error.response.data
+      setFormData({
+        commitHash: '',
+        valid: false,
+        errorMessage: errorMessage.message,
+      })
+    }
+  }
+
+  const updateCommitHash = (hash: string) => {
+    // @todo (agustin) validate hash
+    const valid = true
+    setFormData({
+      commitHash: hash,
+      valid,
+      errorMessage: valid ? '' : 'The given commit hash is invalid',
+    })
   }
 
   return (
@@ -136,7 +165,10 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
               <CustomItemList>
                 <Text>Finally paste the commit hash and press submit.</Text>
                 <EvidenceTextContainer>
-                  <Textfield placeholder={t('commitInputPlaceholder')} />
+                  <Textfield
+                    onChange={(event) => updateCommitHash(event.target.value)}
+                    placeholder={t('commitInputPlaceholder')}
+                  />
                 </EvidenceTextContainer>
               </CustomItemList>
             </ol>

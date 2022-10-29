@@ -11,3 +11,4 @@ export const githubOrgName = process.env.NEXT_PUBLIC_GITHUB_ORG_NAME || ''
 export const githubRepoName = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || ''
 export const githubEvidenceURL = process.env.NEXT_PUBLIC_GITHUB_EVIDENCE_FILE
 export const githubCommitUrl = `https://github.com/${githubOrgName}/${githubRepoName}`
+export const githubApiToken = process.env.NEXT_PUBLIC_GITHUB_API_TOKEN
