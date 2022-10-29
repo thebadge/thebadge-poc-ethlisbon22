@@ -36,8 +36,7 @@ type BadgeCardPreviewProps = {
 
 export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
   const { badgeType, evidenceMetadataUrl } = badge
-  const badgeMetadata =
-    (useMetadata(`${evidenceMetadataUrl}/metadata.json`) as unknown as BadgeMetadata) || null
+  const badgeMetadata = (useMetadata(evidenceMetadataUrl) as unknown as BadgeMetadata) || null
   const badgeTypeMetadata =
     (useMetadata(`${badgeType.metadataURL}`) as unknown as BadgeTypeMetadata) || null
 
