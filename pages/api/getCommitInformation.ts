@@ -22,7 +22,7 @@ const validateEvidence = (commitInfo: GithubCommitInfoResponse, userAddress: str
   if (files[0].filename !== EVIDENCE_FILENAME) {
     return false
   }
-  return files[0].patch.includes(evidenceText)
+  return files[0].patch.toLowerCase().includes(evidenceText.toLowerCase())
 }
 
 export default async function handler(
@@ -30,7 +30,6 @@ export default async function handler(
   res: NextApiResponse<GetCommitInformationResponse>,
 ) {
   const { commitHash, userAddress } = req.body
-
   if (!commitHash) {
     return res.status(500).json({ errorMessage: { message: 'Missing commitHash parameter' } })
   }
@@ -41,7 +40,6 @@ export default async function handler(
     const requestUrl = `https://api.github.com/repos/${githubOrgName}/${githubRepoName}/commits/${commitHash}`
 
     const result = (await axios.get<GithubCommitInfoResponse>(requestUrl, config)).data
-
     const validCommit = validateEvidence(result, userAddress)
 
     if (!validCommit) {
