@@ -21,8 +21,6 @@
   },
   "mainMenu": {
     "home": "Home",
-    "about": "About",
-    "emitter": "Emitter",
     "profile": "Profile"
   },
   "header": {
@@ -44,5 +42,9 @@
   "badgeMint": {
     "title": "Mint your Github Badge",
     "subtitle": "How to mint your Github Badge: "
+  },
+  "profile": {
+    "title": "My Badge Profile",
+    "subtitle": "Your list of badges"
   }
 }
