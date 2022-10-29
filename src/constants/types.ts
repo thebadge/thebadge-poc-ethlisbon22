@@ -50,8 +50,7 @@ export type BadgeTypeMetadata = {
 
 export type BadgeMetadata = BadgeTypeMetadata & {
   userAddress: string
-  // @todo (agustin) make it generic
-  evidence: GithubEvidence
+  evidence: GithubEvidence // TODO implement generic evidence type
 }
 
 export type BadgeType = {

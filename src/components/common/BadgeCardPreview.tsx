@@ -22,23 +22,17 @@ type BadgeCardPreviewProps = {
 
 export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
   const { badgeType, evidenceMetadataUrl } = badge
-  let badgeMetadata = (useMetadata(`${evidenceMetadataUrl}/metadata.json`) as BadgeMetadata) || null
-  let badgeTypeMetadata = (useMetadata(`${badgeType.metadataURL}`) as BadgeTypeMetadata) || null
+  const badgeMetadata =
+    (useMetadata(`${evidenceMetadataUrl}/metadata.json`) as unknown as BadgeMetadata) || null
+  const badgeTypeMetadata =
+    (useMetadata(`${badgeType.metadataURL}`) as unknown as BadgeTypeMetadata) || null
 
   if (!badgeMetadata || !badgeMetadata || !badgeTypeMetadata) {
-    badgeMetadata = {
-      evidence: { githubUser: 'ramabit', commitUrl: '' },
-      description: '',
-      image: '',
-      name: '',
-      userAddress: '',
-    }
-    badgeTypeMetadata = { description: '', name: '', image: '' }
-    // return (
-    //   <BadgeContainer>
-    //     The metadata of the badge could not get recovered, please try again...
-    //   </BadgeContainer>
-    // )
+    return (
+      <BadgeContainer>
+        The metadata of the badge could not get recovered, please try again...
+      </BadgeContainer>
+    )
   }
 
   const { evidence } = badgeMetadata
@@ -51,7 +45,7 @@ export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
         badgeCategory="OFFCHAIN"
         badgeType="GITHUB"
         badgeUrl={evidenceUrl}
-        imageUrl={badgeTypeMetadata?.image}
+        imageUrl={badgeTypeMetadata?.image || ''}
         onClick={() => {
           const newWindow = window.open(evidenceUrl, '_blank', 'noopener,noreferrer')
           if (newWindow) newWindow.opener = null

@@ -13,8 +13,17 @@ import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 import { Curator } from '@/types/generated/subgraph'
 
 const Card = styled(BaseCard)`
+  margin-top: 32px;
   min-height: 300px;
 `
+
+const CardTitle = styled(BaseTitle)`
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 18px;
+  font-weight: 800;
+`
+
 const SectionContainer = styled.div`
   display: flex;
 `
@@ -31,8 +40,8 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <BaseTitle>{t('badgeTypes')}</BaseTitle>
       <Card>
+        <CardTitle>{t('badgeTypes')}</CardTitle>
         {badgeTypes.data?.badgeTypes.length ? (
           <SectionContainer>
             {badgeTypes.data?.badgeTypes.map((type) => (
