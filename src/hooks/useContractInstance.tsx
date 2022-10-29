@@ -1,4 +1,5 @@
 import { JsonRpcSigner } from '@ethersproject/providers'
+import { useSigner } from '@web3modal/react'
 import nullthrows from 'nullthrows'
 
 import { ContractsKeys, contracts } from '@/src/constants/config/contracts'
@@ -14,10 +15,16 @@ export const useContractInstance = <F extends AppFactories, RT extends ReturnTyp
   contractFactory: F,
   contractKey: ContractsKeys,
 ) => {
-  const { appChainId, readOnlyAppProvider, web3Provider } = useWeb3Connection()
+  const { appChainId, readOnlyAppProvider } = useWeb3Connection()
+  // @todo (agustin) check that this work
+  const { data, refetch } = useSigner()
+
   const address = contracts[contractKey]['address'][appChainId]
-  const signer = web3Provider?.getSigner() || readOnlyAppProvider
+  const signer = data || readOnlyAppProvider
   nullthrows(signer, 'There is not signer to execute a tx.')
 
-  return contractFactory.connect(address, signer as JsonRpcSigner) as RT
+  return {
+    refetch,
+    contract: contractFactory.connect(address, signer as JsonRpcSigner) as RT,
+  }
 }

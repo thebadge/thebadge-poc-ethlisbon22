@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+import { useSwitchNetwork } from '@web3modal/react'
 import { useTranslations } from 'next-intl'
 
 import { Modal } from '@/src/components/common/Modal'
@@ -40,7 +41,10 @@ export const ModalSwitchNetwork: React.FC<{ onClose: () => void }> = ({
   onClose,
   ...restProps
 }) => {
-  const { pushNetwork, setAppChainId } = useWeb3Connection()
+  const { setAppChainId } = useWeb3Connection()
+  const { switchNetwork } = useSwitchNetwork({
+    chainId: 100,
+  })
   const chainOptions = Object.values(chainsConfig)
   const t = useTranslations('modalSwitchNetwork')
 
@@ -52,7 +56,7 @@ export const ModalSwitchNetwork: React.FC<{ onClose: () => void }> = ({
             key={index}
             onClick={() => {
               setAppChainId(item.chainId)
-              pushNetwork({ chainId: item.chainIdHex })
+              switchNetwork({ chainId: item.chainId })
               onClose()
             }}
           >

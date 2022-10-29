@@ -72,9 +72,15 @@ const MintGithubPreview: FC<Props> = ({
       // Second create the badge with TheBadge contract
       await sendTx(async () => {
         console.log('1')
-        const res = await theBadge.mintBadgeFromKlerosStrategy(badgeTypeInfo.id, ipfsEvidenceUrl, {
-          value: badgeTypeInfo.feeAndDeposit,
-        })
+        // @todo (agustin) review
+        await theBadge.refetch()
+        const res = await theBadge.contract.mintBadgeFromKlerosStrategy(
+          badgeTypeInfo.id,
+          ipfsEvidenceUrl,
+          {
+            value: badgeTypeInfo.feeAndDeposit,
+          },
+        )
         console.log('2')
         setBadgeCreatedStatus(true)
         return res
