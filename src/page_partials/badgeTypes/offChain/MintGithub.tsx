@@ -1,13 +1,17 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import styled from 'styled-components'
 
 import { useTranslations } from 'next-intl'
+import { Button } from 'thebadge-ui-library'
 
+import { CopyButton } from '@/src/components/buttons/CopyButton'
 import { BaseCard } from '@/src/components/common/BaseCard'
 import { Textfield } from '@/src/components/form/Textfield'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
+import { githubEvidenceURL } from '@/src/constants/common'
 import { SubgraphName, getSubgraphSdkByNetwork } from '@/src/constants/subgraph'
 import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
+import { getGithubEvidence } from '@/src/utils/evidence'
 
 // @todo (agustin) extract all this to generic components
 const Label = styled.label`
@@ -66,11 +70,24 @@ type Props = {
   badgeTypeId: string
 }
 
+type FormData = {
+  commitHash: string
+  valid: boolean
+  errorMessage: string
+}
+
+const initState = {
+  commitHash: '',
+  valid: true,
+  errorMessage: '',
+}
+
 const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
   const { address, appChainId, isAppConnected } = useWeb3Connection()
   const t = useTranslations('badgeMint')
   const gql = getSubgraphSdkByNetwork(appChainId, SubgraphName.TheBadge)
   const badgeType = gql.useBadgeType({ id: badgeTypeId })
+  const [formData, setFormData] = useState<FormData>(initState)
 
   if (!isAppConnected) {
     return <div>Connect your wallet to continue</div>
@@ -80,8 +97,11 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
     return <div>Badge type not found</div>
   }
 
-  const evidenceText = ''
-  const githubEvidenceURL = ''
+  const evidenceText = getGithubEvidence(address!)
+
+  const onSubmit = async () => {
+    // @todo (agustin) logic
+  }
 
   return (
     <Wrapper>
@@ -95,12 +115,14 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
                 <Text>Copy the following text:</Text>
                 <EvidenceTextContainer>
                   <Textfield disabled={true} value={evidenceText} />
+                  <CopyButton copyValue={evidenceText} type={'button'} />
                 </EvidenceTextContainer>
               </CustomItemList>
               <CustomItemList>
                 <Text>
                   Paste the text in a new commit on the following
                   <TextLink href={githubEvidenceURL} rel="noreferrer" target="_blank">
+                    {' '}
                     repository.
                   </TextLink>
                 </Text>
@@ -121,6 +143,14 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
           </BaseCard>
         </Form>
       </RowWrapper>
+
+      <Button
+        disabled={!formData.commitHash || !formData.valid}
+        onClick={() => onSubmit()}
+        type="button"
+      >
+        {t('submit')}
+      </Button>
     </Wrapper>
   )
 }
