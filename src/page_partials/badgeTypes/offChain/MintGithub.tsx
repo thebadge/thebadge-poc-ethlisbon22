@@ -3,11 +3,12 @@ import styled from 'styled-components'
 
 import axios from 'axios'
 import { useTranslations } from 'next-intl'
-import { Button } from 'thebadge-ui-library'
 
 import { GetCommitInformationResponse } from '@/pages/api/getCommitInformation'
+import { ButtonPrimary } from '@/src/components/buttons/Button'
 import { CopyButton } from '@/src/components/buttons/CopyButton'
 import { BaseCard } from '@/src/components/common/BaseCard'
+import { ButtonWrapper } from '@/src/components/common/ButtonWrapper'
 import { Textfield } from '@/src/components/form/Textfield'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
 import { githubCommitUrl, githubEvidenceURL } from '@/src/constants/common'
@@ -78,6 +79,15 @@ type FormData = {
   valid: boolean
   errorMessage: string
 }
+
+const MintButton = styled(ButtonPrimary)`
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 8px;
+  margin-top: 16px;
+  width: 160px;
+  height: 32px;
+`
 
 const initState = {
   commitHash: '',
@@ -193,14 +203,15 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
           </BaseCard>
         </Form>
       </RowWrapper>
-
-      <Button
-        disabled={!formData.commitHash || !formData.valid}
-        onClick={() => onSubmit()}
-        type="button"
-      >
-        {t('submit')}
-      </Button>
+      <ButtonWrapper>
+        <MintButton
+          disabled={!formData.commitHash || !formData.valid}
+          onClick={() => onSubmit()}
+          type="button"
+        >
+          {t('submit')}
+        </MintButton>
+      </ButtonWrapper>
     </Wrapper>
   )
 }

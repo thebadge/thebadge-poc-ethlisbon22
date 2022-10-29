@@ -74,10 +74,6 @@ export const ButtonPrimaryCSS = css`
   }
 `
 
-export const ButtonPrimary = styled(BaseButton)`
-  ${ButtonPrimaryCSS}
-`
-
 export const ButtonDangerCSS = css`
   background-color: ${({ theme: { buttonDanger } }) => buttonDanger.backgroundColor};
   border-color: ${({ theme: { buttonDanger } }) => buttonDanger.borderColor};
@@ -223,4 +219,7 @@ export const ButtonLinePrimaryCSS = css`
 
 export const ButtonLinePrimary = styled(BaseButton)`
   ${ButtonLinePrimaryCSS}
+`
+export const ButtonPrimary = styled(BaseButton)`
+  ${ButtonPrimaryCSS}
 `
