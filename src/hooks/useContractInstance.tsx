@@ -16,15 +16,10 @@ export const useContractInstance = <F extends AppFactories, RT extends ReturnTyp
   contractKey: ContractsKeys,
 ) => {
   const { appChainId, readOnlyAppProvider } = useWeb3Connection()
-  // @todo (agustin) check that this work
-  const { data, refetch } = useSigner()
-
+  const { data } = useSigner()
   const address = contracts[contractKey]['address'][appChainId]
   const signer = data || readOnlyAppProvider
   nullthrows(signer, 'There is not signer to execute a tx.')
 
-  return {
-    refetch,
-    contract: contractFactory.connect(address, signer as JsonRpcSigner) as RT,
-  }
+  return contractFactory.connect(address, signer as JsonRpcSigner) as RT
 }
