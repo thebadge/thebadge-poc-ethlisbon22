@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 import { TransactionResponse } from '@ethersproject/providers'
+import { useAccount } from '@web3modal/react'
 import toast from 'react-hot-toast'
 
 import { notify } from '@/src/components/toast/Toast'
@@ -27,7 +28,9 @@ const TransactionContext = createContext<TransactionContextValue | undefined>(un
 const TRANSACTIONS_STORE = 'pending-transactions'
 
 export const TransactionNotificationProvider: React.FC = ({ children }) => {
-  const { address, appChainId, getExplorerUrl, readOnlyAppProvider } = useWeb3Connection()
+  const { account } = useAccount()
+  const { address } = account
+  const { appChainId, getExplorerUrl, readOnlyAppProvider } = useWeb3Connection()
   const [isRan, setIsRan] = useState(false)
 
   const initialState: TransactionStorageItem[] = []

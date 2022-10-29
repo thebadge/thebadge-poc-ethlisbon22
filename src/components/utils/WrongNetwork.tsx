@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import { useAccount, useNetwork } from '@web3modal/react'
+
 import { ModalSwitchNetwork } from '@/src/components/helpers/ModalSwitchNetwork'
-import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 
 const ErrorSVG: React.FC = () => (
   <svg height="15" viewBox="0 0 15 15" width="15" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +35,10 @@ const Underline = styled.div`
 `
 
 export const WrongNetwork: React.FC = ({ ...restProps }) => {
-  const { isWalletConnected, isWalletNetworkSupported } = useWeb3Connection()
+  const { network } = useNetwork()
+  const { isReady } = useAccount()
+  const isWalletNetworkSupported = !network?.chain?.unsupported || false
+  const isWalletConnected = isReady
   const [showNetworkModal, setShowNetworkModal] = useState(false)
 
   return isWalletConnected && !isWalletNetworkSupported ? (

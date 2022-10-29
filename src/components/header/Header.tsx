@@ -1,24 +1,20 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import { useAccount, useConnectModal, useNetwork } from '@web3modal/react'
 import { useTranslations } from 'next-intl'
 
 import { ButtonLinePrimary } from '@/src/components/buttons/Button'
 import { MobileMenuButton } from '@/src/components/buttons/MobileMenuButton'
 import { Logo as BaseLogo } from '@/src/components/common/Logo'
-import { NavLinkCSS } from '@/src/components/header/Helpers'
 import { UserDropdown } from '@/src/components/header/UserDropdown'
 import { ContainerPadding } from '@/src/components/helpers/ContainerPadding'
 import { MainMenu } from '@/src/components/navigation/MainMenu'
 import { MobileMenu } from '@/src/components/navigation/MobileMenu'
-import { NavLink as BaseNavLink } from '@/src/components/navigation/NavLink'
 import WrongNetwork from '@/src/components/utils/WrongNetwork'
-import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
-import {useConnectModal} from "@web3modal/react";
 
 const Wrapper = styled.header`
   align-items: center;
-  background-color: none;
   color: ${({ theme }) => theme.header.color};
   display: flex;
   flex-grow: 0;
@@ -73,12 +69,10 @@ const UserControls = styled.div`
   }
 `
 
-const NavLink = styled(BaseNavLink)`
-  ${NavLinkCSS}
-`
-
 export const Header: React.FC = (props) => {
-  const { isWalletConnected, isWalletNetworkSupported } = useWeb3Connection()
+  const { isReady: isWalletConnected } = useAccount()
+  const { network } = useNetwork()
+  const isWalletNetworkSupported = !network?.chain?.unsupported || false
   const t = useTranslations('header')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
