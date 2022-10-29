@@ -8,7 +8,6 @@ import { textShortener } from '@/src/utils/tools'
 
 type CustomBadgePreviewProps = {
   githubUser: string
-  commitUrl: string
   githubUserUrl: string
   address: string
 }
@@ -23,7 +22,6 @@ const BadgeContainer = styled.div`
 // @todo (agustin) replace with generic
 export const GithubBadgePreview = ({
   address,
-  commitUrl,
   githubUser,
   githubUserUrl,
 }: CustomBadgePreviewProps) => {
@@ -34,7 +32,7 @@ export const GithubBadgePreview = ({
         animationOnHover={true}
         badgeCategory="OFFCHAIN"
         badgeType="GITHUB"
-        badgeUrl={commitUrl}
+        badgeUrl={githubUserUrl}
         height={300}
         imageUrl={GITHUB_IMAGE_URL}
         onClick={() => {

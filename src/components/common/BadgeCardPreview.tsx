@@ -30,10 +30,9 @@ const BadgeMetadataErrorMessage = styled.div`
 
 type BadgeCardPreviewProps = {
   badge: BadgeType
-  userAddress: string
 }
 
-export const BadgeCardPreview = ({ badge, userAddress }: BadgeCardPreviewProps) => {
+export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
   const { badgeType, evidenceMetadataUrl } = badge
   const badgeMetadata = (useMetadata(evidenceMetadataUrl) as unknown as BadgeMetadata) || null
   const badgeTypeMetadata =
@@ -58,7 +57,6 @@ export const BadgeCardPreview = ({ badge, userAddress }: BadgeCardPreviewProps) 
     <BadgeContainer>
       <GithubBadgePreview
         address={badgeMetadata.userAddress}
-        commitUrl={badgeMetadata.evidence.commitUrl}
         githubUser={evidence.githubUser}
         githubUserUrl={githubUserUrl}
       />

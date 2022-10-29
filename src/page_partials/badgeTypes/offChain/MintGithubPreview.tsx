@@ -84,12 +84,7 @@ const MintGithubPreview: FC<Props> = ({
     <>
       <BaseTitle>Badge creation preview</BaseTitle>
       <BadgeStatus>This is how your new badge will look:</BadgeStatus>
-      <GithubBadgePreview
-        address={address}
-        commitUrl={commitUrl}
-        githubUser={githubUser}
-        githubUserUrl={githubUserUrl}
-      />
+      <GithubBadgePreview address={address} githubUser={githubUser} githubUserUrl={githubUserUrl} />
       <ButtonWrapper>
         <ButtonPrimary onClick={mintBadge} type="button">
           Submit

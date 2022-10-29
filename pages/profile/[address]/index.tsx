@@ -54,11 +54,7 @@ const Profile: NextPage = () => {
         ) : (
           <BadgeListContainer>
             {badges.map((badge) => (
-              <BadgeCardPreview
-                badge={badge as unknown as BadgeType}
-                key={badge.id}
-                userAddress={userAddress}
-              />
+              <BadgeCardPreview badge={badge as unknown as BadgeType} key={badge.id} />
             ))}
           </BadgeListContainer>
         )}
