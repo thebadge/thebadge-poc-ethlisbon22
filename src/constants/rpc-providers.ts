@@ -12,20 +12,29 @@ export const providerChains: ProviderChains = {
   [RPCProviders.infura]: {
     //[Chains.mainnet]: 'mainnet',
     [Chains.goerli]: 'goerli',
+    [Chains.gnosisChain]: 'gnosis',
     // [Chains.kovan]: 'kovan',
   },
   [RPCProviders.alchemy]: {
     //[Chains.mainnet]: 'eth-mainnet',
     [Chains.goerli]: 'eth-goerli',
+    [Chains.gnosisChain]: 'gnosis',
     // [Chains.kovan]: 'eth-kovan',
   },
 }
 
+const GNOSIS_CHAIN_RPC_URL = 'https://rpc.gnosischain.com/'
+
+// @todo (agustin) then fix properly this trick for gnosis chain
 const getInfuraRPCUrl = (chainId: ChainsValues) =>
-  `https://${providerChains[RPCProviders.infura][chainId]}.infura.io/v3/${defaultChainID}`
+  chainId == Chains.gnosisChain
+    ? GNOSIS_CHAIN_RPC_URL
+    : `https://${providerChains[RPCProviders.infura][chainId]}.infura.io/v3/${defaultChainID}`
 
 const getAlchemyRPCUrl = (chainId: ChainsValues) =>
-  `https://${providerChains[RPCProviders.alchemy][chainId]}.g.alchemy.com/v2/${alchemyToken}`
+  chainId == Chains.gnosisChain
+    ? GNOSIS_CHAIN_RPC_URL
+    : `https://${providerChains[RPCProviders.alchemy][chainId]}.g.alchemy.com/v2/${alchemyToken}`
 
 export const getProviderUrl = (
   chainId: ChainsValues,

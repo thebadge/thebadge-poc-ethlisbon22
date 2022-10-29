@@ -28,6 +28,16 @@ export const chainsConfig: Record<ChainsValues, ChainConfig> = {
     blockExplorerUrls: ['https://goerli.etherscan.io/'],
     token: 'ETH',
   },
+  [Chains.gnosisChain]: {
+    id: Chains.gnosisChain,
+    name: 'Gnosis Chain',
+    shortName: 'Gnosis',
+    chainId: Chains.gnosisChain,
+    chainIdHex: '0x64',
+    rpcUrl: getProviderUrl(Chains.gnosisChain),
+    blockExplorerUrls: ['https://gnosisscan.io/'],
+    token: 'xDAI',
+  },
   // [Chains.kovan]: {
   //   id: Chains.kovan,
   //   name: 'Kovan',

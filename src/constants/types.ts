@@ -10,6 +10,7 @@ export enum ThemeType {
 export const Chains = {
   // mainnet: 1,
   goerli: 5,
+  gnosisChain: 100,
   // kovan: 42,
 } as const
 
