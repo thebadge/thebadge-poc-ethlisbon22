@@ -3,9 +3,10 @@ import styled from 'styled-components'
 
 import { formatEther } from 'ethers/lib/utils'
 import { useTranslations } from 'next-intl'
-import { Button, LogoTheBadge } from 'thebadge-ui-library'
+import { LogoTheBadge } from 'thebadge-ui-library'
 
 import { ButtonPrimary } from '@/src/components/buttons/Button'
+import { genericSuspense } from '@/src/components/helpers/SafeSuspense'
 import { ipfsGateway } from '@/src/constants/common'
 import useMetadata from '@/src/hooks/useMetadata'
 import { BadgeTypesQuery } from '@/types/generated/subgraph'
@@ -67,7 +68,7 @@ const GetButton = styled(ButtonPrimary)`
   font-weight: 700;
   font-size: 14px;
   border-radius: 8px;
-  margin-top 16px;
+  margin-top: 16px;
 `
 
 type Props = {
@@ -129,4 +130,4 @@ function OffChainDetails({ badgeType, summary, ...rest }: Props) {
   )
 }
 
-export default OffChainDetails
+export default genericSuspense(OffChainDetails)

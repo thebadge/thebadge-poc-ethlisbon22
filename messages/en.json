@@ -41,7 +41,17 @@
   },
   "badgeMint": {
     "title": "Mint your Github Badge",
-    "subtitle": "How to mint your Github Badge: "
+    "subtitle": "How to mint your Github Badge: ",
+    "step1": "Copy the following text:",
+    "step2a": "Paste the text in a new commit on the following ",
+    "step2b": "repository.",
+    "step2c": "Please note that the commit should be done with the github user you are trying to obtain a badge for.",
+    "step3": "Finally paste the commit hash and press submit.",
+    "commitInputPlaceholder": "Enter the commit hash with the evidence",
+    "submit": "Submit",
+    "errors": {
+      "required": "Required"
+    }
   },
   "profile": {
     "title": "My Badge Profile",

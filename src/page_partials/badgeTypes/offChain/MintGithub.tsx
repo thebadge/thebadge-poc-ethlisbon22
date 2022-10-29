@@ -13,6 +13,7 @@ import { Textfield } from '@/src/components/form/Textfield'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
 import { githubCommitUrl, githubEvidenceURL } from '@/src/constants/common'
 import { SubgraphName, getSubgraphSdkByNetwork } from '@/src/constants/subgraph'
+import OffChainDetails from '@/src/page_partials/badgeTypes/offChain/Details'
 import MintGithubPreview from '@/src/page_partials/badgeTypes/offChain/MintGithubPreview'
 import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 import { getGithubEvidence } from '@/src/utils/evidence'
@@ -63,7 +64,7 @@ const EvidenceTextContainer = styled.div`
 `
 
 const TextLink = styled.a`
-  text-decoration: underline;
+  text-decoration: underline !important;
 `
 
 const Text = styled(Label)`
@@ -164,12 +165,15 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
     <Wrapper>
       <Title>{t('title')}</Title>
       <RowWrapper>
+        <div style={{ margin: 'auto', marginRight: '16px' }}>
+          <OffChainDetails badgeType={badgeType.data.badgeType} summary />
+        </div>
         <Form>
           <BaseCard>
             <SubTitle>{t('subtitle')}</SubTitle>
             <ol>
               <CustomItemList>
-                <Text>Copy the following text:</Text>
+                <Text>1. {t('step1')}</Text>
                 <EvidenceTextContainer>
                   <Textfield disabled={true} value={evidenceText} />
                   <CopyButton copyValue={evidenceText} type={'button'} />
@@ -177,21 +181,15 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
               </CustomItemList>
               <CustomItemList>
                 <Text>
-                  Paste the text in a new commit on the following
+                  2. {t('step2a')}
                   <TextLink href={githubEvidenceURL} rel="noreferrer" target="_blank">
-                    {' '}
-                    repository.
+                    {t('step2b')}
                   </TextLink>
                 </Text>
+                <Text>{t('step2c')}</Text>
               </CustomItemList>
               <CustomItemList>
-                <Text>
-                  Please note that the commit should be done with the github user you are trying to
-                  obtain a badge for.
-                </Text>
-              </CustomItemList>
-              <CustomItemList>
-                <Text>Finally paste the commit hash and press submit.</Text>
+                <Text>3. {t('step3')}</Text>
                 <EvidenceTextContainer>
                   <Textfield
                     onChange={(event) => updateCommitHash(event.target.value)}
