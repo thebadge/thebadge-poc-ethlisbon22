@@ -9,6 +9,7 @@ import { AbstractIntlMessages, NextIntlProvider } from 'next-intl'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 import { SWRConfig } from 'swr'
 
+import { Header } from '@/src/components/header/Header'
 import { InnerContainer } from '@/src/components/helpers/InnerContainer'
 import SafeSuspense from '@/src/components/helpers/SafeSuspense'
 import { Main } from '@/src/components/layout/Main'
@@ -40,6 +41,17 @@ type AppPropsWithLayout = AppProps & {
   messages?: AbstractIntlMessages
 }
 
+const BackgroundGradient = styled('div')`
+  background: linear-gradient(154.96deg, #0b3f33 9.89%, #369485 54.65%, #900d90 100.15%);
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  /* z-index usage is up to you.. although there is no need of using it because the default stack context will work. */
+  zindex: -1;
+`
+
 export default function App({ Component, messages, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => <Main>{page}</Main>)
   return (
@@ -58,7 +70,8 @@ export default function App({ Component, messages, pageProps }: AppPropsWithLayo
               <SafeSuspense>
                 {/*      <TransactionNotificationProvider>*/}
                 {/*        <CookiesWarningProvider>*/}
-                {/*          <Header />*/}
+                <Header />
+                <BackgroundGradient />
                 <Container>{getLayout(<Component {...pageProps} />)}</Container>
                 {/* <Footer /> */}
                 {/*    </CookiesWarningProvider>*/}

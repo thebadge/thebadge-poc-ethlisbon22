@@ -11,4 +11,10 @@ export const commonTheme = {
     maxWidth: '790px',
   },
   ...theBadgeTheme,
+  breakPoints: {
+    desktopStart: '1025px',
+    desktopWideStart: '1281px',
+    tabletLandscapeStart: '769px',
+    tabletPortraitStart: '481px',
+  },
 }
