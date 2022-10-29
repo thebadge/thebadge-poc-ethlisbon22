@@ -106,7 +106,6 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
         userAddress: address,
       })
       const githubOwner = result.data.githubOwner as string
-      console.log('owner', githubOwner)
       setPreviewMode({
         commitUrl: `${githubCommitUrl}/commit/${commitHash}`,
         githubUser: githubOwner,

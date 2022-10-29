@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
 
 import { githubApiToken, githubOrgName, githubRepoName } from '@/src/constants/common'
+import { GithubCommitInfoResponse } from '@/types/github'
 
 export type GetCommitInformationResponse = {
   githubOwner?: string
@@ -24,7 +25,7 @@ export default async function handler(
 
     const requestUrl = `https://api.github.com/repos/${githubOrgName}/${githubRepoName}/commits/${commitHash}`
 
-    const result = (await axios.get(requestUrl, config)).data
+    const result = (await axios.get<GithubCommitInfoResponse>(requestUrl, config)).data
 
     // @todo (agustin) validate evidence
     const validCommit = true
