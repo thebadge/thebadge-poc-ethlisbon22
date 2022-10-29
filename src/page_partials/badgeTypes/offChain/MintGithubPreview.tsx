@@ -1,5 +1,4 @@
-import { useRouter } from 'next/router'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import styled from 'styled-components'
 
 import { ButtonDanger, ButtonPrimary } from '@/src/components/buttons/Button'
@@ -7,6 +6,7 @@ import { ButtonWrapper } from '@/src/components/buttons/ButtonWrapper'
 import { BaseCard } from '@/src/components/common/BaseCard'
 import { Label } from '@/src/components/form/Label'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
+import BadgeMinted from '@/src/page_partials/badgeTypes/offChain/BadgeMinted'
 import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 
 const BadgeStatus = styled.div`
@@ -41,18 +41,23 @@ type Props = {
 }
 
 const MintGithubPreview: FC<Props> = ({ commitUrl, githubUserUrl, onCancel }: Props) => {
-  const router = useRouter()
   const { address } = useWeb3Connection()
-
-  if (!address || !router.query) {
-    return null
-  }
+  const [badgeCreatedStatus, setBadgeCreatedStatus] = useState(false)
 
   const mintBadge = async () => {
     // @todo (agustin)
     // First upload metadata
     // Second create the badge with TheBadge contract
     // Redirect to creation page
+    setBadgeCreatedStatus(true)
+  }
+
+  if (!address) {
+    return null
+  }
+
+  if (badgeCreatedStatus) {
+    return <BadgeMinted />
   }
 
   return (
