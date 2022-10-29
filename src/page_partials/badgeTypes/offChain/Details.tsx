@@ -15,7 +15,8 @@ const Box = styled.div`
   border: 1px solid ${({ theme: { colors } }) => colors.darkGreen};
   box-shadow: 0 0 4px #f6f3f382;
   border-radius: 15px;
-  color: ${({ theme: { colors } }) => colors.textColor};
+  color: ${({ theme: { colors } }) => colors.textColorDark};
+  background-color: white;
 
   padding: 10px;
   width: 200px;
@@ -28,7 +29,7 @@ const Text = styled.div`
   white-space: nowrap;
   min-width: 0;
   text-overflow: ellipsis;
-  color: ${({ theme: { colors } }) => colors.textColor};
+  color: ${({ theme: { colors } }) => colors.textColorDark};
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
