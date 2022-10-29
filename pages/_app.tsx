@@ -23,6 +23,7 @@ import { intlErrorHandler } from '@/src/utils/intlErrorHandler'
 import 'node_modules/thebadge-ui-library/dist/index.css'
 
 import 'sanitize.css'
+import {Web3Modal} from "@web3modal/react";
 
 const Container = styled(InnerContainer)`
   flex-grow: 1;
@@ -54,6 +55,14 @@ const BackgroundGradient = styled('div')`
   zindex: -1;
 `
 
+const walletConnectConfig = {
+  projectId: '037ea4aa9e1aa043b3d617ec1c4f708f',
+  ethereum: {
+    appName: 'The Badge'
+  }
+}
+
+
 export default function App({ Component, messages, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => <Main>{page}</Main>)
   return (
@@ -77,6 +86,7 @@ export default function App({ Component, messages, pageProps }: AppPropsWithLayo
                 </TransactionNotificationProvider>
               </SafeSuspense>
               <Toast />
+              <Web3Modal config={walletConnectConfig} />
             </ThemeProvider>
           </Web3ConnectionProvider>
         </SWRConfig>

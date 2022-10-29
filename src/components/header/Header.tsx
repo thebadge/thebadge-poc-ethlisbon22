@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 
 import { useTranslations } from 'next-intl'
@@ -14,6 +14,7 @@ import { MobileMenu } from '@/src/components/navigation/MobileMenu'
 import { NavLink as BaseNavLink } from '@/src/components/navigation/NavLink'
 import WrongNetwork from '@/src/components/utils/WrongNetwork'
 import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
+import {useConnectModal} from "@web3modal/react";
 
 const Wrapper = styled.header`
   align-items: center;
@@ -77,13 +78,15 @@ const NavLink = styled(BaseNavLink)`
 `
 
 export const Header: React.FC = (props) => {
-  const { connectWallet, isWalletConnected, isWalletNetworkSupported } = useWeb3Connection()
+  const { isWalletConnected, isWalletNetworkSupported } = useWeb3Connection()
   const t = useTranslations('header')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
+
+  const { open } = useConnectModal()
 
   return (
     <>
@@ -102,7 +105,7 @@ export const Header: React.FC = (props) => {
               </UserControls>
             )}
             {!isWalletConnected && (
-              <ButtonLinePrimary onClick={connectWallet} size="lg">
+              <ButtonLinePrimary onClick={open} size="lg">
                 {t('buttonConnect')}
               </ButtonLinePrimary>
             )}

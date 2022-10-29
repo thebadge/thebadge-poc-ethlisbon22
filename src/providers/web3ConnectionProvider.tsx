@@ -26,6 +26,7 @@ import {
 } from '@/src/hooks/usePersistedState'
 import { hexToNumber } from '@/src/utils/tools'
 import { RequiredNonNull } from '@/types/utils'
+import {useAccount} from "@web3modal/react";
 
 const STORAGE_CONNECTED_WALLET = 'onboard_selectedWallet'
 
@@ -118,6 +119,7 @@ export default function Web3ConnectionProvider({ children }: Props) {
   const [{ connecting: connectingWallet, wallet }, connect, disconnect] = useConnectWallet()
   const [{ chains, connectedChain, settingChain }, setChain] = useSetChain()
   const connectedWallets = useWallets()
+  const { account } = useAccount()
 
   const [appChainId, setAppChainId] = useState(INITIAL_APP_CHAIN_ID)
   const [address, setAddress] = useState<string | null>(null)
@@ -153,12 +155,14 @@ export default function Web3ConnectionProvider({ children }: Props) {
 
   // Set user address when connect wallet
   useEffect(() => {
-    if (wallet) {
-      setAddress(wallet.accounts[0].address)
+    if (account) {
+      console.log('new account', account)
+      setAddress(account.address)
+      // connect()
     } else {
       setAddress(null)
     }
-  }, [wallet])
+  }, [account])
 
   // Auto connect wallet if localStorage has values
   useEffect(() => {
