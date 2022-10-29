@@ -18,5 +18,9 @@
         "getBadge": "Get Badge"
       }
     }
+  },
+  "badgeMint": {
+    "title": "Mint your Github Badge",
+    "subtitle": "How to mint your Github Badge: "
   }
 }
