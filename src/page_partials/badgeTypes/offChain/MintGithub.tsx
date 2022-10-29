@@ -10,7 +10,7 @@ import { CopyButton } from '@/src/components/buttons/CopyButton'
 import { BaseCard } from '@/src/components/common/BaseCard'
 import { Textfield } from '@/src/components/form/Textfield'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
-import { githubEvidenceURL } from '@/src/constants/common'
+import { githubCommitUrl, githubEvidenceURL } from '@/src/constants/common'
 import { SubgraphName, getSubgraphSdkByNetwork } from '@/src/constants/subgraph'
 import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 import { getGithubEvidence } from '@/src/utils/evidence'
@@ -90,15 +90,11 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
   const gql = getSubgraphSdkByNetwork(appChainId, SubgraphName.TheBadge)
   const badgeType = gql.useBadgeType({ id: badgeTypeId })
   const [formData, setFormData] = useState<FormData>(initState)
-
-  if (!isAppConnected) {
-    return <div>Connect your wallet to continue</div>
-  }
-
-  if (!badgeType.data?.badgeType) {
-    return <div>Badge type not found</div>
-  }
-
+  const [previewMode, setPreviewMode] = useState<{
+    commitUrl: string
+    githubUser: string
+    githubUserUrl: string
+  } | null>(null)
   const evidenceText = getGithubEvidence(address!)
 
   const onSubmit = async () => {
@@ -110,7 +106,11 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
       })
       const githubOwner = result.data.githubOwner as string
       console.log('owner', githubOwner)
-      // @todo (agustin) add preview page
+      setPreviewMode({
+        commitUrl: `${githubCommitUrl}/commit/${commitHash}`,
+        githubUser: githubOwner,
+        githubUserUrl: `https://github.com/${githubOwner}`,
+      })
     } catch (error: any) {
       console.log('Error fetching commit information:', error.response.data)
       const { errorMessage } = error.response.data
@@ -130,6 +130,18 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
       valid,
       errorMessage: valid ? '' : 'The given commit hash is invalid',
     })
+  }
+
+  if (!isAppConnected) {
+    return <div>Connect your wallet to continue</div>
+  }
+
+  if (!badgeType.data?.badgeType) {
+    return <div>Badge type not found</div>
+  }
+
+  if (previewMode) {
+    return <div>PREVIEW PAGE</div>
   }
 
   return (
