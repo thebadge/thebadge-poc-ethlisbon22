@@ -38,15 +38,19 @@ export const RPCProvidersENV: Record<RPCProviders, string | undefined> = {
 
 export type ProviderChains = { [key in RPCProviders]: { [key in ChainsValues]: string } }
 
+type GithubEvidence = {
+  githubUser: string
+  commitUrl: string
+}
 export type BadgeTypeMetadata = {
   name: string
   description: string
-  image?: string
+  image: File
 }
 
 export type BadgeMetadata = BadgeTypeMetadata & {
   userAddress: string
-  evidence: GithubEvidenceType // TODO implement generic evidence type
+  evidence: GithubEvidence // TODO implement generic evidence type
 }
 
 export type BadgeType = {
@@ -61,9 +65,4 @@ export type BadgeType = {
   user: {
     mintedBadges: number
   }
-}
-
-export type GithubEvidenceType = {
-  githubUser: string
-  commitUrl: string
 }

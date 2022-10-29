@@ -12,3 +12,4 @@ export const githubRepoName = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || ''
 export const githubEvidenceURL = process.env.NEXT_PUBLIC_GITHUB_EVIDENCE_FILE
 export const githubCommitUrl = `https://github.com/${githubOrgName}/${githubRepoName}`
 export const githubApiToken = process.env.NEXT_PUBLIC_GITHUB_API_TOKEN
+export const nftStorageApiToken = process.env.NEXT_PUBLIC_NFT_STORAGE_API_TOKEN
