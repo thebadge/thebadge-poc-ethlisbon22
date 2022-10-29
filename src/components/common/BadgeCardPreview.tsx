@@ -3,6 +3,9 @@ import styled from 'styled-components'
 
 import { BadgePreview } from 'thebadge-ui-library'
 
+import { BadgeMetadata, BadgeType, BadgeTypeMetadata } from '@/src/constants/types'
+import useMetadata from '@/src/hooks/useMetadata'
+
 const BadgeContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,28 +16,33 @@ const BadgeContainer = styled.div`
 `
 
 type BadgeCardPreviewProps = {
-  badge: unknown
+  badge: BadgeType
   userAddress: string
 }
 
 export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
-  // TODO get badge metadata and badge type metadata
-  const badgeMetadata = null
-  const badgeTypeMetadata = { image: '' }
+  const { badgeType, evidenceMetadataUrl } = badge
+  let badgeMetadata = (useMetadata(`${evidenceMetadataUrl}/metadata.json`) as BadgeMetadata) || null
+  let badgeTypeMetadata = (useMetadata(`${badgeType.metadataURL}`) as BadgeTypeMetadata) || null
 
-  // if (!badgeMetadata || !badgeMetadata || !badgeTypeMetadata) {
-  //   return (
-  //     <BadgeContainer>
-  //       The metadata of the badge could not get recovered, please try again...
-  //     </BadgeContainer>
-  //   )
-  // }
+  if (!badgeMetadata || !badgeMetadata || !badgeTypeMetadata) {
+    badgeMetadata = {
+      evidence: { githubUser: 'ramabit', commitUrl: '' },
+      description: '',
+      image: '',
+      name: '',
+      userAddress: '',
+    }
+    badgeTypeMetadata = { description: '', name: '', image: '' }
+    // return (
+    //   <BadgeContainer>
+    //     The metadata of the badge could not get recovered, please try again...
+    //   </BadgeContainer>
+    // )
+  }
 
-  // TODO get badge title from data
-  const badgeTitle = 'Badge'
-
-  // TODO get evidence url
-  const evidenceUrl = 'https://sample.com'
+  const { evidence } = badgeMetadata
+  const evidenceUrl = `https://github.com/${evidence.githubUser}`
 
   return (
     <BadgeContainer>
@@ -49,7 +57,7 @@ export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
           if (newWindow) newWindow.opener = null
         }}
         size={300}
-        title={badgeTitle}
+        title={`@${evidence.githubUser}`}
       />
     </BadgeContainer>
   )

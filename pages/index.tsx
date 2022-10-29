@@ -24,18 +24,18 @@ const Home: NextPage = () => {
   const { appChainId } = useWeb3Connection()
 
   const gql = getSubgraphSdkByNetwork(appChainId, SubgraphName.TheBadge)
-  const offChainBadgeTypes = gql.useBadgeTypes(
+  const badgeTypes = gql.useBadgeTypes(
     { paused: false, curator: Curator.Kleros },
     { refreshInterval: ms('10s') },
   )
 
   return (
     <>
-      <BaseTitle>{'badgeTypes'}</BaseTitle>
+      <BaseTitle>{t('badgeTypes')}</BaseTitle>
       <Card>
-        {offChainBadgeTypes.data?.badgeTypes.length ? (
+        {badgeTypes.data?.badgeTypes.length ? (
           <SectionContainer>
-            {offChainBadgeTypes.data?.badgeTypes.map((type) => (
+            {badgeTypes.data?.badgeTypes.map((type) => (
               <OffChainDetails badgeType={type} key={type.id} />
             ))}
           </SectionContainer>

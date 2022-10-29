@@ -71,3 +71,20 @@ export const BadgeType = gql`
     }
   }
 `
+
+export const UserBadges = gql`
+  query userBadges($id: String!) {
+    badges(where: { user: $id }) {
+      id
+      status
+      evidenceMetadataUrl
+      badgeType {
+        metadataURL
+        klerosMetadataURL
+      }
+      user {
+        mintedBadges
+      }
+    }
+  }
+`

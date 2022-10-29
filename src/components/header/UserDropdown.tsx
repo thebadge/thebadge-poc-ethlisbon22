@@ -16,7 +16,6 @@ import { truncateStringInTheMiddle } from '@/src/utils/tools'
 const Wrapper = styled(Dropdown)`
   display: flex;
   .dropdownItems {
-    width: 170px;
     border-radius: 8px;
     border: 1px solid #f6f3f382;
     box-shadow: 0 0 4px #f6f3f382;

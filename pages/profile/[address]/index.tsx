@@ -6,6 +6,9 @@ import { useTranslations } from 'next-intl'
 
 import { BadgeCardPreview } from '@/src/components/common/BadgeCardPreview'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
+import { SubgraphName, getSubgraphSdkByNetwork } from '@/src/constants/subgraph'
+import { BadgeType } from '@/src/constants/types'
+import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -124,41 +127,19 @@ const test = [
       mintedBadges: 10,
     },
   },
-  {
-    id: '9-0x6230a918266d27ce0abd576b32b6a0516dba39d3',
-    status: 'InReview',
-    badgeType: {
-      metadataURL:
-        'ipfs://bafyreihv7k4vupbhwjlvyjlkdwsi7j2ttwkt3lbqkuctas43f2ausuq4ga/metadata.json',
-      klerosMetadataURL: '/ipfs/bafkreih2ngblf5wdpnxdbkans76nyjge24zlpduujt2ea3lxwpjl6lrpiq',
-    },
-    user: {
-      mintedBadges: 10,
-    },
-  },
-  {
-    id: '10-0x6230a918266d27ce0abd576b32b6a0516dba39d3',
-    status: 'InReview',
-    badgeType: {
-      metadataURL:
-        'ipfs://bafyreihv7k4vupbhwjlvyjlkdwsi7j2ttwkt3lbqkuctas43f2ausuq4ga/metadata.json',
-      klerosMetadataURL: '/ipfs/bafkreih2ngblf5wdpnxdbkans76nyjge24zlpduujt2ea3lxwpjl6lrpiq',
-    },
-    user: {
-      mintedBadges: 10,
-    },
-  },
 ]
 
 const Profile: NextPage = () => {
   const router = useRouter()
   const t = useTranslations('profile')
 
-  // TODO get badges
   const userAddress = router.query.address as string
-  // const { appChainId } = useWeb3Connection()
-  // const gql = getSubgraphSdkByNetwork(appChainId, SubgraphName.TheBadge)
-  // ...
+  const { appChainId } = useWeb3Connection()
+  const gql = getSubgraphSdkByNetwork(appChainId, SubgraphName.TheBadge)
+  const userBadges = gql.useUserBadges({ id: userAddress as string })
+
+  // appending with real badges with test data
+  const badges = userBadges.data?.badges ? [...userBadges.data.badges, ...test] : test
 
   return (
     <>
@@ -167,11 +148,19 @@ const Profile: NextPage = () => {
         {t('subtitle')} {userAddress}
       </SubTitle>
       <ProfileContainer>
-        <BadgeListContainer>
-          {test.map((badge) => (
-            <BadgeCardPreview badge={badge as unknown} key={badge.id} userAddress={userAddress} />
-          ))}
-        </BadgeListContainer>
+        {badges?.length === 0 ? (
+          <div>No badges available.</div>
+        ) : (
+          <BadgeListContainer>
+            {badges.map((badge) => (
+              <BadgeCardPreview
+                badge={badge as unknown as BadgeType}
+                key={badge.id}
+                userAddress={userAddress}
+              />
+            ))}
+          </BadgeListContainer>
+        )}
       </ProfileContainer>
     </>
   )
