@@ -9,6 +9,7 @@ import { ButtonPrimary } from '@/src/components/buttons/Button'
 import { CopyButton } from '@/src/components/buttons/CopyButton'
 import { BaseCard } from '@/src/components/common/BaseCard'
 import { ButtonWrapper } from '@/src/components/common/ButtonWrapper'
+import { Error } from '@/src/components/form/Error'
 import { Textfield } from '@/src/components/form/Textfield'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
 import { githubCommitUrl, githubEvidenceURL } from '@/src/constants/common'
@@ -17,6 +18,7 @@ import OffChainDetails from '@/src/page_partials/badgeTypes/offChain/Details'
 import MintGithubPreview from '@/src/page_partials/badgeTypes/offChain/MintGithubPreview'
 import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 import { getGithubEvidence } from '@/src/utils/evidence'
+import { isValidSHA1 } from '@/src/utils/isValidSHA1'
 
 // @todo (agustin) extract all this to generic components
 const Label = styled.label`
@@ -134,8 +136,7 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
   }
 
   const updateCommitHash = (hash: string) => {
-    // @todo (agustin) validate hash
-    const valid = true
+    const valid = isValidSHA1(hash)
     setFormData({
       commitHash: hash,
       valid,
@@ -196,6 +197,7 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
                     placeholder={t('commitInputPlaceholder')}
                   />
                 </EvidenceTextContainer>
+                <Error>{formData.valid ? null : formData.errorMessage}</Error>
               </CustomItemList>
             </ol>
           </BaseCard>
