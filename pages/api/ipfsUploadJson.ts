@@ -22,9 +22,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       ...req.body,
       image: imgAsBlob,
     }
-    const ipfsRes = (await client.store(metadata)) as { ipnft: string; url: string }
 
-    res.status(200).json(ipfsRes.url)
+    // @todo (agustin) uncomment after test
+    // const ipfsRes = (await client.store(metadata)) as { ipnft: string; url: string }
+
+    const result =
+      'ipfs://bafyreicjwiijx56uvrxr62pfd5tktsxjezc3qke73fhz4hkqygwkomun3q/metadata.json'
+    res.status(200).json(result)
   } catch (error: any) {
     console.error('Error on upload metadata', error)
     res.status(500).send(error.response)
