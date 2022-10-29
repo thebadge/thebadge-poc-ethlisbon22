@@ -1,11 +1,14 @@
 import { FC, useState } from 'react'
 import styled from 'styled-components'
 
+import axios from 'axios'
+
 import { ButtonDanger, ButtonPrimary } from '@/src/components/buttons/Button'
 import { ButtonWrapper } from '@/src/components/buttons/ButtonWrapper'
 import { BaseCard } from '@/src/components/common/BaseCard'
 import { Label } from '@/src/components/form/Label'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
+import { BadgeMetadata } from '@/src/constants/types'
 import BadgeMinted from '@/src/page_partials/badgeTypes/offChain/BadgeMinted'
 import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 
@@ -36,21 +39,19 @@ const BadgeCard = styled(BaseCard)`
 
 type Props = {
   commitUrl: string
+  githubUser: string
   githubUserUrl: string
   onCancel: () => void
 }
 
-const MintGithubPreview: FC<Props> = ({ commitUrl, githubUserUrl, onCancel }: Props) => {
+const MintGithubPreview: FC<Props> = ({
+  commitUrl,
+  githubUser,
+  githubUserUrl,
+  onCancel,
+}: Props) => {
   const { address } = useWeb3Connection()
   const [badgeCreatedStatus, setBadgeCreatedStatus] = useState(false)
-
-  const mintBadge = async () => {
-    // @todo (agustin)
-    // First upload metadata
-    // Second create the badge with TheBadge contract
-    // Redirect to creation page
-    setBadgeCreatedStatus(true)
-  }
 
   if (!address) {
     return null
@@ -58,6 +59,34 @@ const MintGithubPreview: FC<Props> = ({ commitUrl, githubUserUrl, onCancel }: Pr
 
   if (badgeCreatedStatus) {
     return <BadgeMinted />
+  }
+
+  const mintBadge = async () => {
+    // @todo (agustin)
+
+    try {
+      // First upload metadata
+      const badgeMetadata: BadgeMetadata = {
+        name: 'Github',
+        description: 'Link a github account with an ethereum address',
+        userAddress: address,
+        evidence: {
+          githubUser,
+          commitUrl,
+        },
+      }
+
+      const { data: ipfsEvidenceUrl } = await axios.post('/api/ipfsUploadJson', badgeMetadata)
+
+      console.log('ipfs', ipfsEvidenceUrl)
+      // Second create the badge with TheBadge contract
+      // @todo (agustin)
+
+      // Redirect to creation page
+      setBadgeCreatedStatus(true)
+    } catch (error) {
+      console.log('Error minting a badge from kleros strategy...', error)
+    }
   }
 
   return (
