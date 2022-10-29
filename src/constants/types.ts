@@ -45,11 +45,25 @@ type GithubEvidence = {
 export type BadgeTypeMetadata = {
   name: string
   description: string
-  image?: string
+  image: File
 }
 
 export type BadgeMetadata = BadgeTypeMetadata & {
   userAddress: string
   // @todo (agustin) make it generic
   evidence: GithubEvidence
+}
+
+export type BadgeType = {
+  id: string
+  status: string
+  evidenceMetadataUrl: string
+  badgeType: {
+    klerosMetadataURL?: string | null
+    metadataURL: string
+    metadata?: BadgeMetadata
+  }
+  user: {
+    mintedBadges: number
+  }
 }

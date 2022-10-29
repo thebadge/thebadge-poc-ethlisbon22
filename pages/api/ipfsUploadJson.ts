@@ -1,12 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import axios from 'axios'
 import { NFTStorage } from 'nft.storage'
-import { File } from 'nft.storage'
 
 import { nftStorageApiToken } from '@/src/constants/common'
 import { BadgeMetadata } from '@/src/constants/types'
+import { getGithubImage } from '@/src/utils/evidence'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
@@ -17,13 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       token: nftStorageApiToken,
     })
 
-    // @todo (agustin) remove hardcoded github imagw
-    const imgURL = 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
-
-    // @todo (agustin) fix that the img is correctly being uploaded
-    const imgAsBlob = await axios
-      .get(imgURL, { responseType: 'blob' })
-      .then((response) => new File([response.data], 'Github.png'))
+    const imgAsBlob = await getGithubImage()
 
     const metadata: BadgeMetadata = {
       ...req.body,
