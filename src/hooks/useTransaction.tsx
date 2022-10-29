@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 
+import { useAccount } from '@web3modal/react'
 import { ContractTransaction } from 'ethers'
 
 import { useTransactionNotification } from '@/src/providers/TransactionNotificationProvider'
-import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 import { TransactionError } from '@/src/utils/TransactionError'
 
 export type QueryOptions = {
@@ -11,7 +11,8 @@ export type QueryOptions = {
 }
 
 export default function useTransaction() {
-  const { isAppConnected } = useWeb3Connection()
+  const { isReady } = useAccount()
+  const isAppConnected = isReady
   const {
     notifyRejectSignature,
     notifyTxMined,
