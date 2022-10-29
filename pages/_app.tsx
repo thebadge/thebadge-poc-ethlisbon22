@@ -7,6 +7,7 @@ import styled from 'styled-components'
 
 import { BlockExplorer } from '@wagmi/core/dist/declarations/src/constants/blockExplorers'
 import { Chain } from '@wagmi/core/dist/declarations/src/types'
+import { providers } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
 import { AbstractIntlMessages, NextIntlProvider } from 'next-intl'
 import { Toast } from 'next/dist/client/components/react-dev-overlay/internal/components/Toast'
@@ -64,26 +65,31 @@ const blockExplorerGnosis: BlockExplorer = {
   url: 'https://gnosisscan.io/',
 }
 
-const gnosisChain: Chain = {
+export const gnosisTestnet: Chain = {
   id: 100,
-  name: 'Gnosis Chain',
-  network: 'Gnosis',
+  name: 'Gnosis',
+  network: 'gnosis',
   rpcUrls: {
-    ['infura']: GNOSIS_CHAIN_RPC_URL,
     default: GNOSIS_CHAIN_RPC_URL,
   },
   blockExplorers: {
-    etherscan: blockExplorerGnosis,
     default: blockExplorerGnosis,
+    etherscan: blockExplorerGnosis,
   },
   testnet: false,
 }
 
-const walletConnectConfig = {
+const config = {
   projectId: '037ea4aa9e1aa043b3d617ec1c4f708f',
   ethereum: {
     appName: 'The Badge',
-    chains: [gnosisChain],
+    autoConnect: true,
+    chains: [gnosisTestnet],
+    providers: [
+      providers.walletConnectProvider({
+        projectId: '037ea4aa9e1aa043b3d617ec1c4f708f',
+      }),
+    ],
   },
 }
 
@@ -110,7 +116,7 @@ export default function App({ Component, messages, pageProps }: AppPropsWithLayo
                 </TransactionNotificationProvider>
               </SafeSuspense>
               <Toast />
-              <Web3Modal config={walletConnectConfig} />
+              <Web3Modal config={config} />
             </ThemeProvider>
           </Web3ConnectionProvider>
         </SWRConfig>
