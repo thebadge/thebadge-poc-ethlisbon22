@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
+import { useAccount } from '@web3modal/react'
 import { useTranslations } from 'next-intl'
 
 import { NavLink as BaseNavLink } from '@/src/components/navigation/NavLink'
-import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 
 const Wrapper = styled.nav`
   display: none;
@@ -44,7 +44,8 @@ const NavLink = styled(BaseNavLink)`
 
 export const MainMenu: React.FC = ({ ...restProps }) => {
   const t = useTranslations('mainMenu')
-  const { address } = useWeb3Connection()
+  const { account } = useAccount()
+  const { address } = account
 
   return (
     <Wrapper {...restProps}>
