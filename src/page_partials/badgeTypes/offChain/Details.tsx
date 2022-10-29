@@ -91,6 +91,7 @@ function OffChainDetails({ badgeType, summary, ...rest }: Props) {
       fileURI: string
     }) || {}
 
+  // @todo (agustin) badgeType.badgesMintedAmount is not working, use badgeType.mintedBadges.length
   return (
     <Box {...rest}>
       <span>
@@ -111,7 +112,9 @@ function OffChainDetails({ badgeType, summary, ...rest }: Props) {
             </a>
           </Criteria>
 
-          <div>badges minted: {badgeType.badgesMintedAmount}</div>
+          <Cost>
+            {t('badgesMinted')}: {badgeType.mintedBadges.length}
+          </Cost>
           <Cost>
             {t('mintCost')}: {formatEther(badgeType.mintCost)}
           </Cost>

@@ -11,6 +11,7 @@
   "pagePartials": {
     "badgeType": {
       "offChainDetails": {
+        "badgesMinted": "Badges minted",
         "criteria": "Criteria",
         "mintCost": "Mint cost",
         "mintFee": "Mint fee",

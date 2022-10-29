@@ -41,6 +41,9 @@ export const BadgeTypeList = gql`
         id
         isVerified
       }
+      mintedBadges {
+        id
+      }
       mintCost
       mintFee
       klerosDeposit
@@ -61,6 +64,9 @@ export const BadgeType = gql`
       emitter {
         id
         isVerified
+      }
+      mintedBadges {
+        id
       }
       mintCost
       mintFee
