@@ -70,7 +70,8 @@ const UserControls = styled.div`
 `
 
 export const Header: React.FC = (props) => {
-  const { isReady: isWalletConnected } = useAccount()
+  const { account } = useAccount()
+  const isWalletConnected = account.isConnected
   const { network } = useNetwork()
   const isWalletNetworkSupported = !network?.chain?.unsupported || false
   const t = useTranslations('header')

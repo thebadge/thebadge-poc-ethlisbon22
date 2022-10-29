@@ -36,9 +36,9 @@ const Underline = styled.div`
 
 export const WrongNetwork: React.FC = ({ ...restProps }) => {
   const { network } = useNetwork()
-  const { isReady } = useAccount()
+  const { account } = useAccount()
   const isWalletNetworkSupported = !network?.chain?.unsupported || false
-  const isWalletConnected = isReady
+  const isWalletConnected = account.isConnected
   const [showNetworkModal, setShowNetworkModal] = useState(false)
 
   return isWalletConnected && !isWalletNetworkSupported ? (

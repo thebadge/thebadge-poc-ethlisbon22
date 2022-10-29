@@ -11,8 +11,8 @@ export type QueryOptions = {
 }
 
 export default function useTransaction() {
-  const { isReady } = useAccount()
-  const isAppConnected = isReady
+  const { account } = useAccount()
+  const isAppConnected = account.isConnected
   const {
     notifyRejectSignature,
     notifyTxMined,

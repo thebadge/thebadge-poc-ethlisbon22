@@ -101,9 +101,8 @@ const initState = {
 
 const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
   const { appChainId } = useWeb3Connection()
-  const { account, isReady } = useAccount()
-  const isAppConnected = isReady
-  const { address } = account
+  const { account } = useAccount()
+  const { address, isConnected: isAppConnected } = account
   const t = useTranslations('badgeMint')
   const gql = getSubgraphSdkByNetwork(appChainId, SubgraphName.TheBadge)
   const badgeType = gql.useBadgeType({ id: badgeTypeId })

@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components'
 
+import { useAccount, useNetwork, useSwitchNetwork } from '@web3modal/react'
 import { Button } from 'thebadge-ui-library'
 
 import { getNetworkConfig } from '@/src/constants/chains'
@@ -22,7 +23,6 @@ const loadingAnimation = keyframes`
 const Content = styled.div`
   --inline-loading-opacity-start: 0.4;
 
-  animation-delay: 0;
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-name: ${loadingAnimation};
@@ -35,11 +35,17 @@ const Content = styled.div`
 `
 
 export default function WrongNetwork() {
-  const { appChainId, isWalletConnected, isWalletNetworkSupported, pushNetwork } =
-    useWeb3Connection()
+  const { account } = useAccount()
+  const { network } = useNetwork()
+  const isWalletNetworkSupported = !network?.chain?.unsupported || false
+  const { appChainId } = useWeb3Connection()
+  const isWalletConnected = account.isConnected
+  const { switchNetwork } = useSwitchNetwork({
+    chainId: 100,
+  })
   const appChain = getNetworkConfig(appChainId)
   return isWalletConnected && !isWalletNetworkSupported ? (
-    <Button onClick={() => pushNetwork({ chainId: appChain.chainIdHex })}>
+    <Button onClick={() => switchNetwork({ chainId: appChain.chainId })}>
       <Content>Swich to valid network</Content>
     </Button>
   ) : null

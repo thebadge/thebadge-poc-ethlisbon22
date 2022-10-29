@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
+import { useAccount, useDisconnect, useNetwork } from '@web3modal/react'
 import { useTranslations } from 'next-intl'
 
 import { Link as BaseLink } from '@/src/components/assets/Link'
@@ -120,8 +121,12 @@ SmallCircle.defaultProps = { state: 'error' }
 
 export const UserDropdown: React.FC = ({ ...restProps }) => {
   const t = useTranslations('userDropdown')
-  const { address, disconnectWallet, getExplorerUrl, isWalletNetworkSupported } =
-    useWeb3Connection()
+  const { getExplorerUrl } = useWeb3Connection()
+  const { account } = useAccount()
+  const { address } = account
+  const disconnect = useDisconnect()
+  const { network } = useNetwork()
+  const isWalletNetworkSupported = !network?.chain?.unsupported || false
   const [showNetworkModal, setShowNetworkModal] = useState(false)
 
   return (
@@ -154,7 +159,7 @@ export const UserDropdown: React.FC = ({ ...restProps }) => {
             <span>Switch network</span>
             <SwitchNetwork />
           </Item>,
-          <Item key="2" onClick={disconnectWallet}>
+          <Item key="2" onClick={disconnect}>
             <span>{t('disconnect')}</span> <Logout />
           </Item>,
         ]}
