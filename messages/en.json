@@ -19,6 +19,28 @@
       }
     }
   },
+  "mainMenu": {
+    "home": "Home",
+    "about": "About",
+    "emitter": "Emitter",
+    "profile": "Profile"
+  },
+  "header": {
+    "buttonConnect": "Connect"
+  },
+  "userDropdown": {
+    "connected": "Connected",
+    "error": "Error",
+    "connect": "Connect",
+    "disconnect": "Log out",
+    "switchTo": "Switch network"
+  },
+  "modalSwitchNetwork": {
+    "title": "Choose a network"
+  },
+  "wrongNetwork": {
+    "text": "<underline>Switch to a valid network</underline> to use the app!"
+  },
   "badgeMint": {
     "title": "Mint your Github Badge",
     "subtitle": "How to mint your Github Badge: "
