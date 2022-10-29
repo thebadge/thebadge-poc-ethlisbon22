@@ -141,4 +141,19 @@ export const lightTheme = {
     colorHover: darkestGreen,
     colorActive: darkestGreen,
   },
+  textField: {
+    backgroundColor: 'transparent',
+    borderColor: darkGreen,
+    color: textColor,
+    errorColor: error,
+    successColor: success,
+    active: {
+      backgroundColor: 'transparent',
+      borderColor: darkGreen,
+      color: textColor,
+    },
+    placeholder: {
+      color: textColor,
+    },
+  },
 }
