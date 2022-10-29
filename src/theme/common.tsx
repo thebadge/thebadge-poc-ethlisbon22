@@ -8,7 +8,7 @@ export const commonTheme = {
     horizontalPaddingMobile: '10px',
     horizontalPaddingTabletLandscapeStart: '15px',
     horizontalPaddingTabletPortraitStart: '15px',
-    maxWidth: '790px',
+    maxWidth: '1024px',
   },
   ...theBadgeTheme,
   breakPoints: {

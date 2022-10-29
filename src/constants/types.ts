@@ -46,7 +46,7 @@ export type BadgeTypeMetadata = {
 
 export type BadgeMetadata = BadgeTypeMetadata & {
   userAddress: string
-  evidence: GithubEvidenceType
+  evidence: GithubEvidenceType // TODO implement generic evidence type
 }
 
 export type BadgeType = {
@@ -63,11 +63,7 @@ export type BadgeType = {
   }
 }
 
-export type EvidenceType = {
-  // TODO add general evidence attributes
-}
-
-export type GithubEvidenceType = EvidenceType & {
+export type GithubEvidenceType = {
   githubUser: string
   commitUrl: string
 }

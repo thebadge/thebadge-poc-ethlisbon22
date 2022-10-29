@@ -27,7 +27,7 @@ export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
 
   if (!badgeMetadata || !badgeMetadata || !badgeTypeMetadata) {
     badgeMetadata = {
-      evidence: { githubUser: 'ramabit', commitUrl: '' },
+      evidence: { githubUser: 'demo', commitUrl: '' },
       description: '',
       image: '',
       name: '',
