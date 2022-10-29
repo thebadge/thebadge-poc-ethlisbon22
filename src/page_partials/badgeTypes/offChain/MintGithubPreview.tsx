@@ -11,6 +11,7 @@ import { BaseTitle } from '@/src/components/text/BaseTitle'
 import { BadgeMetadata } from '@/src/constants/types'
 import BadgeMinted from '@/src/page_partials/badgeTypes/offChain/BadgeMinted'
 import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
+import { getGithubImage } from '@/src/utils/evidence'
 
 const BadgeStatus = styled.div`
   display: flex;
@@ -70,6 +71,7 @@ const MintGithubPreview: FC<Props> = ({
         name: 'Github',
         description: 'Link a github account with an ethereum address',
         userAddress: address,
+        image: await getGithubImage(),
         evidence: {
           githubUser,
           commitUrl,
