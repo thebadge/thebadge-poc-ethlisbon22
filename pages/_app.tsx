@@ -18,6 +18,8 @@ import { Header } from '@/src/components/header/Header'
 import { InnerContainer } from '@/src/components/helpers/InnerContainer'
 import SafeSuspense from '@/src/components/helpers/SafeSuspense'
 import { Main } from '@/src/components/layout/Main'
+import { getProviderUrl } from '@/src/constants/rpc-providers'
+import { Chains } from '@/src/constants/types'
 import { Head } from '@/src/page_partials/index/Head'
 import { TransactionNotificationProvider } from '@/src/providers/TransactionNotificationProvider'
 import ThemeProvider from '@/src/providers/themeProvider'
@@ -65,7 +67,7 @@ const blockExplorerGnosis: BlockExplorer = {
   url: 'https://gnosisscan.io/',
 }
 
-export const gnosisTestnet: Chain = {
+const gnosisTestnet: Chain = {
   id: 100,
   name: 'Gnosis',
   network: 'gnosis',
@@ -79,12 +81,31 @@ export const gnosisTestnet: Chain = {
   testnet: false,
 }
 
+const blockExplorerGoerli: BlockExplorer = {
+  name: 'goerli',
+  url: 'https://goerli.etherscan.io/',
+}
+
+const goerli: Chain = {
+  id: 5,
+  name: 'Görli Testnet',
+  network: 'Goerli',
+  rpcUrls: {
+    default: getProviderUrl(Chains.goerli),
+  },
+  blockExplorers: {
+    default: blockExplorerGoerli,
+    etherscan: blockExplorerGoerli,
+  },
+  testnet: true,
+}
+
 const config = {
   projectId: '037ea4aa9e1aa043b3d617ec1c4f708f',
   ethereum: {
     appName: 'The Badge',
     autoConnect: true,
-    chains: [gnosisTestnet],
+    chains: [gnosisTestnet, goerli],
     providers: [
       providers.walletConnectProvider({
         projectId: '037ea4aa9e1aa043b3d617ec1c4f708f',
