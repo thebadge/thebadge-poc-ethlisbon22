@@ -9,9 +9,13 @@ import { BaseCard } from '@/src/components/common/BaseCard'
 import { Label } from '@/src/components/form/Label'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
 import { BadgeMetadata } from '@/src/constants/types'
+import { useContractInstance } from '@/src/hooks/useContractInstance'
+import useTransaction from '@/src/hooks/useTransaction'
 import BadgeMinted from '@/src/page_partials/badgeTypes/offChain/BadgeMinted'
 import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 import { getGithubImage } from '@/src/utils/evidence'
+import { BadgeTypeQuery } from '@/types/generated/subgraph'
+import { TheBadge__factory } from '@/types/typechain'
 
 const BadgeStatus = styled.div`
   display: flex;
@@ -43,9 +47,11 @@ type Props = {
   githubUser: string
   githubUserUrl: string
   onCancel: () => void
+  badgeTypeInfo: NonNullable<BadgeTypeQuery['badgeType']>
 }
 
 const MintGithubPreview: FC<Props> = ({
+  badgeTypeInfo,
   commitUrl,
   githubUser,
   githubUserUrl,
@@ -53,6 +59,8 @@ const MintGithubPreview: FC<Props> = ({
 }: Props) => {
   const { address } = useWeb3Connection()
   const [badgeCreatedStatus, setBadgeCreatedStatus] = useState(false)
+  const theBadge = useContractInstance(TheBadge__factory, 'TheBadge')
+  const sendTx = useTransaction()
 
   if (!address) {
     return null
@@ -63,8 +71,6 @@ const MintGithubPreview: FC<Props> = ({
   }
 
   const mintBadge = async () => {
-    // @todo (agustin)
-
     try {
       // First upload metadata
       const badgeMetadata: BadgeMetadata = {
@@ -80,12 +86,14 @@ const MintGithubPreview: FC<Props> = ({
 
       const { data: ipfsEvidenceUrl } = await axios.post('/api/ipfsUploadJson', badgeMetadata)
 
-      console.log('ipfs', ipfsEvidenceUrl)
       // Second create the badge with TheBadge contract
-      // @todo (agustin)
-
-      // Redirect to creation page
-      setBadgeCreatedStatus(true)
+      await sendTx(async () => {
+        const res = await theBadge.mintBadgeFromKlerosStrategy(badgeTypeInfo.id, ipfsEvidenceUrl, {
+          value: badgeTypeInfo.feeAndDeposit,
+        })
+        setBadgeCreatedStatus(true)
+        return res
+      })
     } catch (error) {
       console.log('Error minting a badge from kleros strategy...', error)
     }

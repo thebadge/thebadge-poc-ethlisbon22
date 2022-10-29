@@ -6,6 +6,7 @@ import { ReactElement, ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { AbstractIntlMessages, NextIntlProvider } from 'next-intl'
+import { Toast } from 'next/dist/client/components/react-dev-overlay/internal/components/Toast'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 import { SWRConfig } from 'swr'
 
@@ -14,6 +15,7 @@ import { InnerContainer } from '@/src/components/helpers/InnerContainer'
 import SafeSuspense from '@/src/components/helpers/SafeSuspense'
 import { Main } from '@/src/components/layout/Main'
 import { Head } from '@/src/page_partials/index/Head'
+import { TransactionNotificationProvider } from '@/src/providers/TransactionNotificationProvider'
 import ThemeProvider from '@/src/providers/themeProvider'
 import { intlErrorHandler } from '@/src/utils/intlErrorHandler'
 
@@ -68,16 +70,13 @@ export default function App({ Component, messages, pageProps }: AppPropsWithLayo
           <Web3ConnectionProvider>
             <ThemeProvider>
               <SafeSuspense>
-                {/*      <TransactionNotificationProvider>*/}
-                {/*        <CookiesWarningProvider>*/}
-                <Header />
-                <BackgroundGradient />
-                <Container>{getLayout(<Component {...pageProps} />)}</Container>
-                {/* <Footer /> */}
-                {/*    </CookiesWarningProvider>*/}
-                {/*  </TransactionNotificationProvider>*/}
+                <TransactionNotificationProvider>
+                  <Header />
+                  <BackgroundGradient />
+                  <Container>{getLayout(<Component {...pageProps} />)}</Container>
+                </TransactionNotificationProvider>
               </SafeSuspense>
-              {/*    <Toast />*/}
+              <Toast />
             </ThemeProvider>
           </Web3ConnectionProvider>
         </SWRConfig>

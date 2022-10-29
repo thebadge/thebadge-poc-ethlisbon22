@@ -141,7 +141,13 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
   }
 
   if (previewMode) {
-    return <MintGithubPreview {...previewMode} onCancel={() => setPreviewMode(null)} />
+    return (
+      <MintGithubPreview
+        {...previewMode}
+        badgeTypeInfo={badgeType.data.badgeType}
+        onCancel={() => setPreviewMode(null)}
+      />
+    )
   }
 
   return (
