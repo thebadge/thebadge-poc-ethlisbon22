@@ -50,6 +50,9 @@ const MintGithubPreview: FC<Props> = ({ commitUrl, githubUserUrl, onCancel }: Pr
 
   const mintBadge = async () => {
     // @todo (agustin)
+    // First upload metadata
+    // Second create the badge with TheBadge contract
+    // Redirect to creation page
   }
 
   return (
