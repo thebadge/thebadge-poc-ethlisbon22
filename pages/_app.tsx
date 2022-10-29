@@ -5,6 +5,9 @@ import dynamic from 'next/dynamic'
 import { ReactElement, ReactNode } from 'react'
 import styled from 'styled-components'
 
+import { BlockExplorer } from '@wagmi/core/dist/declarations/src/constants/blockExplorers'
+import { Chain } from '@wagmi/core/dist/declarations/src/types'
+import { Web3Modal } from '@web3modal/react'
 import { AbstractIntlMessages, NextIntlProvider } from 'next-intl'
 import { Toast } from 'next/dist/client/components/react-dev-overlay/internal/components/Toast'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
@@ -23,7 +26,6 @@ import { intlErrorHandler } from '@/src/utils/intlErrorHandler'
 import 'node_modules/thebadge-ui-library/dist/index.css'
 
 import 'sanitize.css'
-import {Web3Modal} from "@web3modal/react";
 
 const Container = styled(InnerContainer)`
   flex-grow: 1;
@@ -54,14 +56,36 @@ const BackgroundGradient = styled('div')`
   /* z-index usage is up to you.. although there is no need of using it because the default stack context will work. */
   zindex: -1;
 `
+// @todo (agustin) move everything to a specific place
+const GNOSIS_CHAIN_RPC_URL = 'https://rpc.gnosischain.com/'
+
+const blockExplorerGnosis: BlockExplorer = {
+  name: 'gnosisChain',
+  url: 'https://gnosisscan.io/',
+}
+
+const gnosisChain: Chain = {
+  id: 100,
+  name: 'Gnosis Chain',
+  network: 'Gnosis',
+  rpcUrls: {
+    ['infura']: GNOSIS_CHAIN_RPC_URL,
+    default: GNOSIS_CHAIN_RPC_URL,
+  },
+  blockExplorers: {
+    etherscan: blockExplorerGnosis,
+    default: blockExplorerGnosis,
+  },
+  testnet: false,
+}
 
 const walletConnectConfig = {
   projectId: '037ea4aa9e1aa043b3d617ec1c4f708f',
   ethereum: {
-    appName: 'The Badge'
-  }
+    appName: 'The Badge',
+    chains: [gnosisChain],
+  },
 }
-
 
 export default function App({ Component, messages, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => <Main>{page}</Main>)
