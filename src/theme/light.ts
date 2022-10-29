@@ -47,6 +47,7 @@ export const lightTheme = {
     borderColorHover: '#dd4e4e',
     color: '#fff',
     colorHover: '#fff',
+    width: '160px',
   },
   buttonPrimary: {
     backgroundColor: lightGreen,
@@ -55,6 +56,7 @@ export const lightTheme = {
     borderColorHover: lighterGreen,
     color: darkestGreen,
     colorHover: darkestGreen,
+    width: '160px',
   },
   buttonLinePrimary: {
     backgroundColor: 'transparent',

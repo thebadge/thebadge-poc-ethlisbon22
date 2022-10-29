@@ -1,14 +1,13 @@
-import { FC, useState } from 'react'
+import React, { FC, useState } from 'react'
 import styled from 'styled-components'
 
 import axios from 'axios'
 
 import { ButtonDanger, ButtonPrimary } from '@/src/components/buttons/Button'
 import { ButtonWrapper } from '@/src/components/buttons/ButtonWrapper'
-import { BaseCard } from '@/src/components/common/BaseCard'
-import { Label } from '@/src/components/form/Label'
+import { GithubBadgePreview } from '@/src/components/githubBadgePreview/GithubBadgePreview'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
-import { BadgeMetadata } from '@/src/constants/types'
+import { BadgeMetadata, BadgeType } from '@/src/constants/types'
 import { useContractInstance } from '@/src/hooks/useContractInstance'
 import useTransaction from '@/src/hooks/useTransaction'
 import BadgeMinted from '@/src/page_partials/badgeTypes/offChain/BadgeMinted'
@@ -21,25 +20,7 @@ const BadgeStatus = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 3rem;
-`
-
-const BadgeContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 3rem;
-  height: 200px;
-  width: 100%;
-`
-
-// @todo (agustin) replace with ui library
-const BadgeCard = styled(BaseCard)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-  height: 300px;
-  background: black;
+  font-size: 1.6rem;
 `
 
 type Props = {
@@ -103,23 +84,12 @@ const MintGithubPreview: FC<Props> = ({
     <>
       <BaseTitle>Badge creation preview</BaseTitle>
       <BadgeStatus>This is how your new badge will look:</BadgeStatus>
-      <BadgeContainer>
-        <BadgeCard>
-          <Label>Github account:</Label>
-          <Label>
-            <a href={githubUserUrl} rel="noreferrer" target="_blank">
-              {githubUserUrl}
-            </a>
-          </Label>
-          <Label>User address:</Label>
-          <Label>{address}</Label>
-          <Label>
-            <a href={commitUrl} rel="noreferrer" target="_blank">
-              Your evidence (Commit)
-            </a>
-          </Label>
-        </BadgeCard>
-      </BadgeContainer>
+      <GithubBadgePreview
+        address={address}
+        commitUrl={commitUrl}
+        githubUser={githubUser}
+        githubUserUrl={githubUserUrl}
+      />
       <ButtonWrapper>
         <ButtonPrimary onClick={mintBadge} type="button">
           Submit

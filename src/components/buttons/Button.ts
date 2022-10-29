@@ -57,6 +57,7 @@ export const ButtonPrimaryCSS = css`
   background-color: ${({ theme: { buttonPrimary } }) => buttonPrimary.backgroundColor};
   border-color: ${({ theme: { buttonPrimary } }) => buttonPrimary.borderColor};
   color: ${({ theme: { buttonPrimary } }) => buttonPrimary.color};
+  width: ${({ theme: { buttonPrimary } }) => buttonPrimary.width};
 
   &:hover {
     background-color: ${({ theme: { buttonPrimary } }) => buttonPrimary.backgroundColorHover};
@@ -78,6 +79,7 @@ export const ButtonDangerCSS = css`
   background-color: ${({ theme: { buttonDanger } }) => buttonDanger.backgroundColor};
   border-color: ${({ theme: { buttonDanger } }) => buttonDanger.borderColor};
   color: ${({ theme: { buttonDanger } }) => buttonDanger.color};
+  width: ${({ theme: { buttonDanger } }) => buttonDanger.width};
 
   &:hover {
     background-color: ${({ theme: { buttonDanger } }) => buttonDanger.backgroundColorHover};

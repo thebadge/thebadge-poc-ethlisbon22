@@ -43,7 +43,7 @@ export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
   if (!badgeMetadata || !badgeMetadata || !badgeTypeMetadata) {
     return (
       <BadgeContainerError>
-        <LogoWithText></LogoWithText>
+        <LogoWithText />
         <BadgeMetadataErrorMessage>
           <div>The metadata of the badge could not get recovered.</div>
           <div>Please try again.</div>
