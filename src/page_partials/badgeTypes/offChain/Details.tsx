@@ -113,7 +113,7 @@ function OffChainDetails({ badgeType, summary, ...rest }: Props) {
           </Criteria>
 
           <Cost>
-            {t('badgesMinted')}: {badgeType.mintedBadges.length}
+            {t('badgesMinted')}: {badgeType.badgesMintedAmount}
           </Cost>
           <Cost>
             {t('mintCost')}: {formatEther(badgeType.mintCost)}
