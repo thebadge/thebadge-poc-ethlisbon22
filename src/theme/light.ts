@@ -17,6 +17,7 @@ const borderColor = 'rgba(250,250,250,0.2)'
 const darkGray = 'rgb(10, 25, 50)'
 const darkBlue = 'rgb(6, 75, 141)'
 const componentBackgroundColor = 'rgba(12, 12, 12, 0.85)'
+const darkGreen = '#5BBCAD'
 
 export const lightTheme = {
   body: {
@@ -54,5 +55,20 @@ export const lightTheme = {
     sidebarBackgroundColor: 'rgb(255, 255, 255, 0.08)',
     buttonBackgroundColor: primaryLight,
     buttonBackgroundColorHover: 'rgb(32, 64, 194, 0.12)',
+  },
+  textField: {
+    backgroundColor: 'transparent',
+    borderColor: darkGreen,
+    color: textColor,
+    errorColor: error,
+    successColor: success,
+    active: {
+      backgroundColor: 'transparent',
+      borderColor: darkGreen,
+      color: textColor,
+    },
+    placeholder: {
+      color: textColor,
+    },
   },
 }
