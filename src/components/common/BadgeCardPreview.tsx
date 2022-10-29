@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { BadgePreview } from 'thebadge-ui-library'
-
 import { LogoWithText } from '@/src/components/assets/LogoWithText'
+import { GithubBadgePreview } from '@/src/components/githubBadgePreview/GithubBadgePreview'
 import { BadgeMetadata, BadgeType, BadgeTypeMetadata } from '@/src/constants/types'
 import useMetadata from '@/src/hooks/useMetadata'
 
@@ -34,7 +33,7 @@ type BadgeCardPreviewProps = {
   userAddress: string
 }
 
-export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
+export const BadgeCardPreview = ({ badge, userAddress }: BadgeCardPreviewProps) => {
   const { badgeType, evidenceMetadataUrl } = badge
   const badgeMetadata = (useMetadata(evidenceMetadataUrl) as unknown as BadgeMetadata) || null
   const badgeTypeMetadata =
@@ -53,22 +52,15 @@ export const BadgeCardPreview = ({ badge }: BadgeCardPreviewProps) => {
   }
 
   const { evidence } = badgeMetadata
-  const evidenceUrl = `https://github.com/${evidence.githubUser}`
+  const githubUserUrl = `https://github.com/${evidence.githubUser}`
 
   return (
     <BadgeContainer>
-      <BadgePreview
-        animationOnHover={true}
-        badgeCategory="OFFCHAIN"
-        badgeType="GITHUB"
-        badgeUrl={evidenceUrl}
-        imageUrl={badgeTypeMetadata?.image || ''}
-        onClick={() => {
-          const newWindow = window.open(evidenceUrl, '_blank', 'noopener,noreferrer')
-          if (newWindow) newWindow.opener = null
-        }}
-        size={300}
-        title={`@${evidence.githubUser}`}
+      <GithubBadgePreview
+        address={badgeMetadata.userAddress}
+        commitUrl={badgeMetadata.evidence.commitUrl}
+        githubUser={evidence.githubUser}
+        githubUserUrl={githubUserUrl}
       />
     </BadgeContainer>
   )
