@@ -12,6 +12,7 @@ import { Textfield } from '@/src/components/form/Textfield'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
 import { githubCommitUrl, githubEvidenceURL } from '@/src/constants/common'
 import { SubgraphName, getSubgraphSdkByNetwork } from '@/src/constants/subgraph'
+import MintGithubPreview from '@/src/page_partials/badgeTypes/offChain/MintGithubPreview'
 import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 import { getGithubEvidence } from '@/src/utils/evidence'
 
@@ -141,7 +142,7 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
   }
 
   if (previewMode) {
-    return <div>PREVIEW PAGE</div>
+    return <MintGithubPreview {...previewMode} onCancel={() => console.log('cancel test')} />
   }
 
   return (
