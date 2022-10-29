@@ -1,8 +1,9 @@
 import { NextPage } from 'next'
 import styled from 'styled-components'
 
+import { useAccount } from '@web3modal/react'
+
 import { BaseTitle } from '@/src/components/text/BaseTitle'
-import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 
 const BadgeStatusContainer = styled.div`
   display: flex;
@@ -17,7 +18,8 @@ const BadgeStatus = styled.div`
 `
 
 const BadgeMinted: NextPage = () => {
-  const { address } = useWeb3Connection()
+  const { account } = useAccount()
+  const { address } = account
   return (
     <>
       <BaseTitle>Badge Status</BaseTitle>

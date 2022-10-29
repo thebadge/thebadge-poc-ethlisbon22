@@ -1,17 +1,17 @@
 import React, { FC, useState } from 'react'
 import styled from 'styled-components'
 
+import { useAccount } from '@web3modal/react'
 import axios from 'axios'
 
 import { ButtonDanger, ButtonPrimary } from '@/src/components/buttons/Button'
 import { ButtonWrapper } from '@/src/components/buttons/ButtonWrapper'
 import { GithubBadgePreview } from '@/src/components/githubBadgePreview/GithubBadgePreview'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
-import { BadgeMetadata, BadgeType } from '@/src/constants/types'
+import { BadgeMetadata } from '@/src/constants/types'
 import { useContractInstance } from '@/src/hooks/useContractInstance'
 import useTransaction from '@/src/hooks/useTransaction'
 import BadgeMinted from '@/src/page_partials/badgeTypes/offChain/BadgeMinted'
-import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 import { getGithubImage } from '@/src/utils/evidence'
 import { BadgeTypeQuery } from '@/types/generated/subgraph'
 import { TheBadge__factory } from '@/types/typechain'
@@ -38,7 +38,8 @@ const MintGithubPreview: FC<Props> = ({
   githubUserUrl,
   onCancel,
 }: Props) => {
-  const { address } = useWeb3Connection()
+  const { account } = useAccount()
+  const { address } = account
   const [badgeCreatedStatus, setBadgeCreatedStatus] = useState(false)
   const theBadge = useContractInstance(TheBadge__factory, 'TheBadge')
   const sendTx = useTransaction()
@@ -67,14 +68,18 @@ const MintGithubPreview: FC<Props> = ({
 
       const { data: ipfsEvidenceUrl } = await axios.post('/api/ipfsUploadJson', badgeMetadata)
 
+      console.log('asd', ipfsEvidenceUrl)
       // Second create the badge with TheBadge contract
       await sendTx(async () => {
+        console.log('1')
         const res = await theBadge.mintBadgeFromKlerosStrategy(badgeTypeInfo.id, ipfsEvidenceUrl, {
           value: badgeTypeInfo.feeAndDeposit,
         })
+        console.log('2')
         setBadgeCreatedStatus(true)
         return res
       })
+      console.log('3')
     } catch (error) {
       console.log('Error minting a badge from kleros strategy...', error)
     }

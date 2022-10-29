@@ -1,6 +1,7 @@
 import { FC, useState } from 'react'
 import styled from 'styled-components'
 
+import { useAccount } from '@web3modal/react'
 import axios from 'axios'
 import { useTranslations } from 'next-intl'
 
@@ -99,7 +100,10 @@ const initState = {
 }
 
 const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
-  const { address, appChainId, isAppConnected } = useWeb3Connection()
+  const { appChainId } = useWeb3Connection()
+  const { account, isReady } = useAccount()
+  const isAppConnected = isReady
+  const { address } = account
   const t = useTranslations('badgeMint')
   const gql = getSubgraphSdkByNetwork(appChainId, SubgraphName.TheBadge)
   const badgeType = gql.useBadgeType({ id: badgeTypeId })
