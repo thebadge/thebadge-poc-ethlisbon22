@@ -22,7 +22,7 @@ const validateEvidence = (commitInfo: GithubCommitInfoResponse, userAddress: str
   if (files[0].filename !== EVIDENCE_FILENAME) {
     return false
   }
-  return files[0].patch.includes(evidenceText)
+  return files[0].patch.toLowerCase().includes(evidenceText.toLowerCase())
 }
 
 export default async function handler(
