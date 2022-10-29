@@ -43,6 +43,7 @@ const MintGithubPreview: FC<Props> = ({
   const [badgeCreatedStatus, setBadgeCreatedStatus] = useState(false)
   const theBadge = useContractInstance(TheBadge__factory, 'TheBadge')
   const sendTx = useTransaction()
+  const [submitStarted, setSubmitStarted] = useState(false)
 
   if (!address) {
     return null
@@ -68,11 +69,14 @@ const MintGithubPreview: FC<Props> = ({
 
       const { data: ipfsEvidenceUrl } = await axios.post('/api/ipfsUploadJson', badgeMetadata)
 
-      console.log('asd', ipfsEvidenceUrl)
       // Second create the badge with TheBadge contract
       await sendTx(async () => {
-        console.log('1')
-        // @todo (agustin) review
+        // @todo (agustin) this partially fix the issue with the network change
+        // seems that we need to call two times the sendTransaction in order to make it work
+        // the first one it call the refetch and the update of the network starts
+        // the second time the network is ok and the tx goes well, seems that there is an issue with wallet connect
+        // this means that the submit button has to be pressed two times in order for the tx to work
+        setSubmitStarted(true)
         await theBadge.refetch()
         const res = await theBadge.contract.mintBadgeFromKlerosStrategy(
           badgeTypeInfo.id,
@@ -81,13 +85,13 @@ const MintGithubPreview: FC<Props> = ({
             value: badgeTypeInfo.feeAndDeposit,
           },
         )
-        console.log('2')
         setBadgeCreatedStatus(true)
         return res
       })
-      console.log('3')
     } catch (error) {
       console.log('Error minting a badge from kleros strategy...', error)
+    } finally {
+      setSubmitStarted(false)
     }
   }
 
@@ -97,7 +101,7 @@ const MintGithubPreview: FC<Props> = ({
       <BadgeStatus>This is how your new badge will look:</BadgeStatus>
       <GithubBadgePreview address={address} githubUser={githubUser} githubUserUrl={githubUserUrl} />
       <ButtonWrapper>
-        <ButtonPrimary onClick={mintBadge} type="button">
+        <ButtonPrimary disabled={submitStarted} onClick={mintBadge} type="button">
           Submit
         </ButtonPrimary>
         <ButtonDanger onClick={onCancel} type="button">
