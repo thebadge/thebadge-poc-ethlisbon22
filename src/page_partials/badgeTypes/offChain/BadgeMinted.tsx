@@ -14,6 +14,8 @@ const BadgeStatusContainer = styled.div`
 const BadgeStatus = styled.div`
   display: flex;
   align-items: center;
+  padding: 8px;
+  font-size: 1.2rem;
 `
 
 const BadgeMinted: NextPage = () => {
@@ -23,8 +25,10 @@ const BadgeMinted: NextPage = () => {
       <BaseTitle>Badge Status</BaseTitle>
       <BadgeStatusContainer>
         <BadgeStatus>
-          Your badge has been sent to Kleros for approval. After the probation period you will see
-          it on your <a href={`/profile/${address}`}>profile.</a>
+          <span>
+            Your badge has been sent to Kleros for approval. After the probation period you will see
+            it on your <a href={`/profile/${address}`}>profile.</a>
+          </span>
         </BadgeStatus>
       </BadgeStatusContainer>
     </>
