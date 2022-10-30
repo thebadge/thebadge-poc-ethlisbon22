@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
 import { useTranslations } from 'next-intl'
@@ -8,6 +9,7 @@ import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 const Wrapper = styled.nav`
   display: none;
   height: 100%;
+  font-size: 1.2rem;
 
   @media (min-width: ${({ theme }) => theme.breakPoints.tabletLandscapeStart}) {
     align-items: center;
@@ -45,11 +47,20 @@ const NavLink = styled(BaseNavLink)`
 export const MainMenu: React.FC = ({ ...restProps }) => {
   const t = useTranslations('mainMenu')
   const { address } = useWeb3Connection()
-
+  const router = useRouter()
   return (
     <Wrapper {...restProps}>
-      <NavLink href="/">{t('home')}</NavLink>
-      {address && <NavLink href={`/profile/${address}`}>{t('profile')}</NavLink>}
+      <NavLink className={router.route == '/home' ? 'active' : ''} href="/">
+        {t('home')}
+      </NavLink>
+      {address && (
+        <NavLink
+          className={router.route == '/profile/[address]' ? 'active' : ''}
+          href={`/profile/${address}`}
+        >
+          {t('profile')}
+        </NavLink>
+      )}
     </Wrapper>
   )
 }

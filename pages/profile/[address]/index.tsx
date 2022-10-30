@@ -22,6 +22,10 @@ const BadgeListContainer = styled.div`
   flex-wrap: wrap;
 `
 
+const MessageContainer = styled.div`
+  font-size: 1.2rem;
+`
+
 const SubTitle = styled(BaseTitle)`
   font-size: 1.8rem;
   font-weight: 600;
@@ -50,7 +54,7 @@ const Profile: NextPage = () => {
       </SubTitle>
       <ProfileContainer>
         {badges?.length === 0 ? (
-          <div>No badges available.</div>
+          <MessageContainer>No badges available.</MessageContainer>
         ) : (
           <BadgeListContainer>
             {badges.map((badge) => (

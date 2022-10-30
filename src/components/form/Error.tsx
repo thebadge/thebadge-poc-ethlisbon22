@@ -9,7 +9,7 @@ export const Error = styled.label`
   left: 3px;
   line-height: 1.2;
   top: calc(100% + 3px);
-  white-space: nowrap;
+  white-space: pre-wrap;
 
   &:empty {
     display: none;
