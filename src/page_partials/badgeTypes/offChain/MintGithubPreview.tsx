@@ -7,7 +7,7 @@ import { ButtonDanger, ButtonPrimary } from '@/src/components/buttons/Button'
 import { ButtonWrapper } from '@/src/components/buttons/ButtonWrapper'
 import { GithubBadgePreview } from '@/src/components/githubBadgePreview/GithubBadgePreview'
 import { BaseTitle } from '@/src/components/text/BaseTitle'
-import { BadgeMetadata, BadgeType } from '@/src/constants/types'
+import { BadgeMetadata } from '@/src/constants/types'
 import { useContractInstance } from '@/src/hooks/useContractInstance'
 import useTransaction from '@/src/hooks/useTransaction'
 import BadgeMinted from '@/src/page_partials/badgeTypes/offChain/BadgeMinted'
@@ -42,17 +42,19 @@ const MintGithubPreview: FC<Props> = ({
   const [badgeCreatedStatus, setBadgeCreatedStatus] = useState(false)
   const theBadge = useContractInstance(TheBadge__factory, 'TheBadge')
   const sendTx = useTransaction()
+  const [mintStarted, setMintStarted] = useState(false)
 
   if (!address) {
     return null
   }
 
-  if (badgeCreatedStatus) {
+  if (!badgeCreatedStatus) {
     return <BadgeMinted />
   }
 
   const mintBadge = async () => {
     try {
+      setMintStarted(true)
       // First upload metadata
       const badgeMetadata: BadgeMetadata = {
         name: 'Github',
@@ -77,6 +79,8 @@ const MintGithubPreview: FC<Props> = ({
       })
     } catch (error) {
       console.log('Error minting a badge from kleros strategy...', error)
+    } finally {
+      setMintStarted(false)
     }
   }
 
@@ -86,7 +90,7 @@ const MintGithubPreview: FC<Props> = ({
       <BadgeStatus>This is how your new badge will look:</BadgeStatus>
       <GithubBadgePreview address={address} githubUser={githubUser} githubUserUrl={githubUserUrl} />
       <ButtonWrapper>
-        <ButtonPrimary onClick={mintBadge} type="button">
+        <ButtonPrimary disabled={mintStarted} onClick={mintBadge} type="button">
           Submit
         </ButtonPrimary>
         <ButtonDanger onClick={onCancel} type="button">
