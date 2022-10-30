@@ -83,7 +83,7 @@ const MintGithubPreview: FC<Props> = ({
     return null
   }
 
-  if (!badgeCreatedStatus) {
+  if (badgeCreatedStatus) {
     return <BadgeMinted />
   }
 
