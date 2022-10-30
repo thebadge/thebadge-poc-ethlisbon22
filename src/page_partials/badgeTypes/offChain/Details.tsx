@@ -23,6 +23,13 @@ const Box = styled.div`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.tabletPortraitStart}) {
+    margin-right: 0px;
+  }
 `
 
 const Text = styled.div`
@@ -113,7 +120,7 @@ function OffChainDetails({ badgeType, summary, ...rest }: Props) {
           </Criteria>
 
           <Cost>
-            {t('badgesMinted')}: {badgeType.mintedBadges.length}
+            {t('badgesMinted')}: {badgeType.badgesMintedAmount}
           </Cost>
           <Cost>
             {t('mintCost')}: {formatEther(badgeType.mintCost)}
