@@ -14,9 +14,30 @@ const BadgeStatusContainer = styled.div`
 
 const BadgeStatus = styled.div`
   display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+  column-gap: 16px;
   align-items: center;
-  padding: 8px;
-  font-size: 1.2rem;
+`
+
+const Label = styled.label`
+  color: ${({ theme: { colors } }) => colors.textColor};
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 8px;
+`
+
+const SubTitle = styled(Label)`
+  font-size: 1.8rem;
+  font-weight: 600;
+
+  text-align: center;
+`
+
+const Img = styled.img`
+  height: 200px;
 `
 
 const BadgeMinted: NextPage = () => {
@@ -27,10 +48,12 @@ const BadgeMinted: NextPage = () => {
       <BaseTitle>Badge Status</BaseTitle>
       <BadgeStatusContainer>
         <BadgeStatus>
-          <span>
-            Your badge has been sent to Kleros for approval. After the probation period you will see
-            it on your <a href={`/profile/${address}`}>profile.</a>
-          </span>
+          <Img src="/certification.png" />
+          <SubTitle>Your badge has been sent to Kleros for approval.</SubTitle>
+          <Label>
+            After the probation period you will see it on your{' '}
+            <a href={`/profile/${address}`}>profile.</a>
+          </Label>
         </BadgeStatus>
       </BadgeStatusContainer>
     </>
