@@ -26,6 +26,9 @@ const CardTitle = styled(BaseTitle)`
 
 const SectionContainer = styled.div`
   display: flex;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tabletPortraitStart}) {
+    justify-content: center;
+  }
 `
 
 const Home: NextPage = () => {

@@ -23,6 +23,13 @@ const Box = styled.div`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.tabletPortraitStart}) {
+    margin-right: 0px;
+  }
 `
 
 const Text = styled.div`
