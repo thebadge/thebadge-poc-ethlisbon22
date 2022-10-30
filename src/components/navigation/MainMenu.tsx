@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
 import { useAccount } from '@web3modal/react'
@@ -8,6 +9,7 @@ import { NavLink as BaseNavLink } from '@/src/components/navigation/NavLink'
 const Wrapper = styled.nav`
   display: none;
   height: 100%;
+  font-size: 1.2rem;
 
   @media (min-width: ${({ theme }) => theme.breakPoints.tabletLandscapeStart}) {
     align-items: center;
@@ -44,13 +46,23 @@ const NavLink = styled(BaseNavLink)`
 
 export const MainMenu: React.FC = ({ ...restProps }) => {
   const t = useTranslations('mainMenu')
+  const router = useRouter()
   const { account } = useAccount()
   const { address } = account
 
   return (
     <Wrapper {...restProps}>
-      <NavLink href="/">{t('home')}</NavLink>
-      {address && <NavLink href={`/profile/${address}`}>{t('profile')}</NavLink>}
+      <NavLink className={router.route == '/home' ? 'active' : ''} href="/">
+        {t('home')}
+      </NavLink>
+      {address && (
+        <NavLink
+          className={router.route == '/profile/[address]' ? 'active' : ''}
+          href={`/profile/${address}`}
+        >
+          {t('profile')}
+        </NavLink>
+      )}
     </Wrapper>
   )
 }

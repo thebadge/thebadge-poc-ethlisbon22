@@ -6,7 +6,7 @@ import axios from 'axios'
 import { useTranslations } from 'next-intl'
 
 import { GetCommitInformationResponse } from '@/pages/api/getCommitInformation'
-import { ButtonPrimary } from '@/src/components/buttons/Button'
+import { ButtonLinePrimary, ButtonPrimary } from '@/src/components/buttons/Button'
 import { CopyButton } from '@/src/components/buttons/CopyButton'
 import { BaseCard } from '@/src/components/common/BaseCard'
 import { ButtonWrapper } from '@/src/components/common/ButtonWrapper'
@@ -102,6 +102,20 @@ const MintButton = styled(ButtonPrimary)`
   height: 32px;
 `
 
+const ConnectButton = styled(ButtonLinePrimary)`
+  color: ${({ theme }) => theme.colors.darkGreen};
+  border-color: ${({ theme }) => theme.colors.darkGreen};
+`
+
+const AppConnectedContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+`
+
 const initState = {
   commitHash: '',
   valid: true,
@@ -136,13 +150,13 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
         githubUser: githubOwner,
         githubUserUrl: `https://github.com/${githubOwner}`,
       })
-    } catch (error: any) {
+    } catch (err: any) {
       console.log('Error fetching commit information:', error.response.data)
-      const { errorMessage } = error.response.data
+      const error = err?.response?.data?.errorMessage || 'errorFound'
       setFormData({
         commitHash: '',
         valid: false,
-        errorMessage: errorMessage.message,
+        errorMessage: error.message,
       })
     }
   }
@@ -156,8 +170,18 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
     })
   }
 
+  const { connectWallet } = useWeb3Connection()
   if (!isAppConnected) {
-    return <div>Connect your wallet to continue</div>
+    return (
+      <AppConnectedContent>
+        <SubTitle>Oops!</SubTitle>
+        <Label>Connect your wallet to continue</Label>
+
+        <ConnectButton onClick={connectWallet} size="lg">
+          Connect
+        </ConnectButton>
+      </AppConnectedContent>
+    )
   }
 
   if (!badgeType.data?.badgeType) {

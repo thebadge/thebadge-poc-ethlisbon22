@@ -31,6 +31,41 @@ type Props = {
   badgeTypeInfo: NonNullable<BadgeTypeQuery['badgeType']>
 }
 
+const ButtonWrapperStyled = styled(ButtonWrapper)`
+  @media (max-width: ${({ theme }) => theme.breakPoints.tabletPortraitStart}) {
+    flex-direction: column;
+  }
+`
+
+const ButtonSubmit = styled(ButtonPrimary)`
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 8px;
+  margin-top: 16px;
+  width: 160px;
+  height: 32px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.tabletPortraitStart}) {
+    margin-top: 0;
+    width: 260px;
+    height: 40px;
+  }
+`
+
+const ButtonCancel = styled(ButtonDanger)`
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 8px;
+  margin-top: 16px;
+  width: 160px;
+  height: 32px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.tabletPortraitStart}) {
+    width: 260px;
+    height: 40px;
+  }
+`
+
 const MintGithubPreview: FC<Props> = ({
   badgeTypeInfo,
   commitUrl,
@@ -100,14 +135,14 @@ const MintGithubPreview: FC<Props> = ({
       <BaseTitle>Badge creation preview</BaseTitle>
       <BadgeStatus>This is how your new badge will look:</BadgeStatus>
       <GithubBadgePreview address={address} githubUser={githubUser} githubUserUrl={githubUserUrl} />
-      <ButtonWrapper>
-        <ButtonPrimary disabled={submitStarted} onClick={mintBadge} type="button">
+      <ButtonWrapperStyled>
+        <ButtonSubmit disabled={submitStarted} onClick={mintBadge} type="button">
           Submit
-        </ButtonPrimary>
-        <ButtonDanger onClick={onCancel} type="button">
+        </ButtonSubmit>
+        <ButtonCancel onClick={onCancel} type="button">
           Cancel
-        </ButtonDanger>
-      </ButtonWrapper>
+        </ButtonCancel>
+      </ButtonWrapperStyled>
     </>
   )
 }
