@@ -15,6 +15,7 @@ const Wrapper = styled.button`
   padding: 0;
   user-select: none;
   width: 40px;
+  margin-top: 4px;
 
   @media (min-width: ${({ theme }) => theme.breakPoints.tabletLandscapeStart}) {
     display: none;

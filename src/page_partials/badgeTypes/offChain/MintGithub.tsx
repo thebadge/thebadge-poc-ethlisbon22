@@ -28,28 +28,14 @@ const Label = styled.label`
   font-weight: 400;
   line-height: 1.2;
   margin-bottom: 8px;
-  white-space: nowrap;
-`
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`
-
-const Title = styled(BaseTitle)`
-  text-align: center;
-  margin-bottom: 16px;
-`
-
-const RowWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 `
 
 const Form = styled.form`
   width: 100%;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.tabletPortraitStart}) {
+    margin-top: 20px;
+  }
 `
 
 const CustomItemList = styled.li`
@@ -71,6 +57,29 @@ const TextLink = styled.a`
 
 const Text = styled(Label)`
   font-size: 1.4rem;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tabletPortraitStart}) {
+  }
+`
+const Card = styled(BaseCard)`
+  margin-top: 32px;
+  min-height: 300px;
+`
+
+const CardTitle = styled(BaseTitle)`
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 18px;
+  font-weight: 800;
+`
+const SectionContainer = styled.div``
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  @media (max-width: ${({ theme }) => theme.breakPoints.tabletPortraitStart}) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 type Props = {
@@ -163,56 +172,57 @@ const MintGithub: FC<Props> = ({ badgeTypeId }: Props) => {
   }
 
   return (
-    <Wrapper>
-      <Title>{t('title')}</Title>
-      <RowWrapper>
-        <div style={{ margin: 'auto', marginRight: '16px' }}>
+    <Card>
+      <CardTitle>{t('title')}</CardTitle>
+      <SectionContainer>
+        <Content>
           <OffChainDetails badgeType={badgeType.data.badgeType} summary />
-        </div>
-        <Form>
-          <BaseCard>
-            <SubTitle>{t('subtitle')}</SubTitle>
-            <ol>
-              <CustomItemList>
-                <Text>1. {t('step1')}</Text>
-                <EvidenceTextContainer>
-                  <Textfield disabled={true} value={evidenceText} />
-                  <CopyButton copyValue={evidenceText} type={'button'} />
-                </EvidenceTextContainer>
-              </CustomItemList>
-              <CustomItemList>
-                <Text>
-                  2. {t('step2a')}
-                  <TextLink href={githubEvidenceURL} rel="noreferrer" target="_blank">
-                    {t('step2b')}
-                  </TextLink>
-                </Text>
-                <Text>{t('step2c')}</Text>
-              </CustomItemList>
-              <CustomItemList>
-                <Text>3. {t('step3')}</Text>
-                <EvidenceTextContainer>
-                  <Textfield
-                    onChange={(event) => updateCommitHash(event.target.value)}
-                    placeholder={t('commitInputPlaceholder')}
-                  />
-                </EvidenceTextContainer>
-                <Error>{formData.valid ? null : formData.errorMessage}</Error>
-              </CustomItemList>
-            </ol>
-          </BaseCard>
-        </Form>
-      </RowWrapper>
-      <ButtonWrapper>
-        <MintButton
-          disabled={!formData.commitHash || !formData.valid}
-          onClick={() => onSubmit()}
-          type="button"
-        >
-          {t('submit')}
-        </MintButton>
-      </ButtonWrapper>
-    </Wrapper>
+          <Form>
+            <BaseCard>
+              <SubTitle>{t('subtitle')}</SubTitle>
+              <ol>
+                <CustomItemList>
+                  <Text>1. {t('step1')}</Text>
+                  <EvidenceTextContainer>
+                    <Textfield disabled={true} value={evidenceText} />
+                    <CopyButton copyValue={evidenceText} type={'button'} />
+                  </EvidenceTextContainer>
+                </CustomItemList>
+                <CustomItemList>
+                  <Text>
+                    2. {t('step2a')}
+                    <TextLink href={githubEvidenceURL} rel="noreferrer" target="_blank">
+                      {t('step2b')}
+                    </TextLink>
+                  </Text>
+                  <Text>{t('step2c')}</Text>
+                </CustomItemList>
+                <CustomItemList>
+                  <Text>3. {t('step3')}</Text>
+                  <EvidenceTextContainer>
+                    <Textfield
+                      onChange={(event) => updateCommitHash(event.target.value)}
+                      placeholder={t('commitInputPlaceholder')}
+                    />
+                  </EvidenceTextContainer>
+                  <Error>{formData.valid ? null : formData.errorMessage}</Error>
+                </CustomItemList>
+              </ol>
+            </BaseCard>
+          </Form>
+        </Content>
+
+        <ButtonWrapper>
+          <MintButton
+            disabled={!formData.commitHash || !formData.valid}
+            onClick={() => onSubmit()}
+            type="button"
+          >
+            {t('submit')}
+          </MintButton>
+        </ButtonWrapper>
+      </SectionContainer>
+    </Card>
   )
 }
 
