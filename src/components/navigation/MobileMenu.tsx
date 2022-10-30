@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 
 import { ContainerPadding } from '@/src/components/helpers/ContainerPadding'
 import { NavLink as BaseNavLink } from '@/src/components/navigation/NavLink'
-import { sections } from '@/src/constants/sections'
+import { useWeb3Connection } from '@/src/providers/web3ConnectionProvider'
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.modal.overlayColor};
@@ -62,17 +62,13 @@ const NavLink = styled(BaseNavLink)`
 
 export const MobileMenu: React.FC<DOMAttributes<HTMLDivElement>> = ({ ...restProps }) => {
   const t = useTranslations('mainMenu')
+  const { address } = useWeb3Connection()
 
   return (
     <Wrapper {...restProps}>
       <Menu>
-        {sections.map(({ href, section }, index) => {
-          return (
-            <NavLink href={href} key={`mobile_menu_item_${index}`}>
-              {t(section)}
-            </NavLink>
-          )
-        })}
+        <NavLink href="/">{t('home')}</NavLink>
+        {address && <NavLink href={`/profile/${address}`}>{t('profile')}</NavLink>}
       </Menu>
     </Wrapper>
   )
